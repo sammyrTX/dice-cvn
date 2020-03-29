@@ -1,11 +1,19 @@
 """Store scores for players"""
 
-# Set points for fixed score categories
+# Points for fixed score categories in Dict
 
-score_full_house = 25
-score_straight_small = 30
-score_straight_large = 40
-score_kind_five_of = 50
+fixed_scores = {'score_full_house': 25,
+                'score_straight_small': 30,
+                'score_straight_large': 40,
+                'score_kind_five_of': 50,
+                }
+
+# Lower section categories that use total of dice for score
+
+lower_section_categories_total_dice_score = ['lower_kind_three_of',
+                                             'lower_kind_four_of',
+                                             'lower_all_dice',
+                                             ]
 
 
 class scorepad_:
@@ -80,12 +88,15 @@ def upper_section_scoring(die_value, dice_list):
     return score
 
 
-
-
-
+def lower_section_scoring(score_category, dice_list):
+    if score_category in lower_section_categories_total_dice_score:
+        return total_all_dice(dice_list)
+    else:
+        return fixed_scores[score_category]
 
 ###############################################################################
 # Object Testing
+
 
 player1 = scorepad_('Johnny')
 
@@ -102,7 +113,10 @@ print('Add 10 and 20 to each score respectively')
 player1.upper_ones += 0
 player1.upper_twos += 0
 player1.upper_sixes += 0
-player1.lower_full_house += 25
+player1.lower_full_house += lower_section_scoring('score_full_house',
+                                                  test_list
+                                                  )
+
 player1.lower_all_dice += total_all_dice(test_list)
 
 player1.upper_ones += upper_section_scoring(5, test_list)
@@ -117,4 +131,7 @@ print()
 print(f'Upper section total: {player1.upper_section_total()}')
 print(f'Lower section total: {player1.lower_section_total()}')
 print(f'Grand total: {player1.grand_total()}')
+print()
+print(f"Full House Score: {fixed_scores['score_full_house']}")
+print(f"Small Straight Score: {fixed_scores['score_straight_small']}")
 print(player1)
