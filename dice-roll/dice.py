@@ -4,6 +4,7 @@ from random import randint
 
 # store dice results in a list
 dice_list = []
+dice_list_hold = []
 
 
 def die_roll():
@@ -19,3 +20,21 @@ for _ in range(1, 6):
     dice_list.append(die_roll())
 
 print(f'dice_list: {dice_list}')
+
+for _ in enumerate(dice_list):
+    print(f'die: {_[0] + 1}  value = {_[1]}')
+
+test_test = input('Enter a list: ')
+print(f'List entered: {test_test}')
+print('List using a for-loop:')
+
+# Use indexing below to select and collect die values for a given roll
+for items_ in test_test:
+    # print(f'die #: {items_}')  #'   value: {dice_list[int(items_)]}')
+    idx = int(items_)
+    print(f'die #: {items_}   value: {dice_list[idx - 1]}')
+    dice_list_hold.append(dice_list[idx - 1])
+
+print(f'Die values to keep: {dice_list_hold}')
+
+# **** Need to next generate roll 2 and 3 and collect die values
