@@ -1,8 +1,23 @@
 """Process game play"""
 
+import sys
+
+print(f'sys.path: {sys.path}')
+
+sys.path.append(r'/mnt/MCRN_RAID1/work/PROJECTS/dice-cvn/diceroll')
+
+print(f'sys.path: {sys.path}')
+
+print('*' * 60)
+print()
+
+
 # Resume turn processing
 
-from dice_roll.dice import die_roll
+try:
+    from diceroll.dice import die_roll
+except ImportError:
+    print('Module not found')
 
 # Lists to store initial rolls and final dice
 
