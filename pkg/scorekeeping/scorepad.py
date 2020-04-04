@@ -94,44 +94,45 @@ def lower_section_scoring(score_category, dice_list):
     else:
         return fixed_scores[score_category]
 
-###############################################################################
-# Object Testing
+if __name__ == '__main__':
+    ###############################################################################
+    # Object Testing
 
 
-player1 = scorepad_('Johnny')
+    player1 = scorepad_('Johnny')
 
-print(f'Name of player is {player1.name}')
-print(f'Upper Section Scores:')
-print(f'One\'s: {player1.upper_ones}')
-print(f'Two\'s: {player1.upper_twos}')
+    print(f'Name of player is {player1.name}')
+    print(f'Upper Section Scores:')
+    print(f'One\'s: {player1.upper_ones}')
+    print(f'Two\'s: {player1.upper_twos}')
 
-test_list = [1, 1, 1, 4, 4, 3]
+    test_list = [1, 1, 1, 4, 4, 3]
 
-print()
-print('Add 10 and 20 to each score respectively')
+    print()
+    print('Add 10 and 20 to each score respectively')
 
-player1.upper_ones += 0
-player1.upper_twos += 0
-player1.upper_sixes += 0
-player1.lower_full_house += lower_section_scoring('score_full_house',
-                                                  test_list
-                                                  )
+    player1.upper_ones += 0
+    player1.upper_twos += 0
+    player1.upper_sixes += 0
+    player1.lower_full_house += lower_section_scoring('score_full_house',
+                                                      test_list
+                                                      )
 
-player1.lower_all_dice += total_all_dice(test_list)
+    player1.lower_all_dice += total_all_dice(test_list)
 
-player1.upper_ones += upper_section_scoring(5, test_list)
+    player1.upper_ones += upper_section_scoring(5, test_list)
 
-print(f'Updated Upper Section Scores:')
-print(f'One\'s: {player1.upper_ones}')
-print(f'Two\'s: {player1.upper_twos}')
-print(f'Six\'s: {player1.upper_sixes}')
-print(f'Full House: {player1.lower_full_house}')
-print(f'Total All Dice: {player1.lower_all_dice}')
-print()
-print(f'Upper section total: {player1.upper_section_total()}')
-print(f'Lower section total: {player1.lower_section_total()}')
-print(f'Grand total: {player1.grand_total()}')
-print()
-print(f"Full House Score: {fixed_scores['score_full_house']}")
-print(f"Small Straight Score: {fixed_scores['score_straight_small']}")
-print(player1)
+    print(f'Updated Upper Section Scores:')
+    print(f'One\'s: {player1.upper_ones}')
+    print(f'Two\'s: {player1.upper_twos}')
+    print(f'Six\'s: {player1.upper_sixes}')
+    print(f'Full House: {player1.lower_full_house}')
+    print(f'Total All Dice: {player1.lower_all_dice}')
+    print()
+    print(f'Upper section total: {player1.upper_section_total()}')
+    print(f'Lower section total: {player1.lower_section_total()}')
+    print(f'Grand total: {player1.grand_total()}')
+    print()
+    print(f"Full House Score: {fixed_scores['score_full_house']}")
+    print(f"Small Straight Score: {fixed_scores['score_straight_small']}")
+    print(player1)

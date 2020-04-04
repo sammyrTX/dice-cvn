@@ -5,6 +5,12 @@ from random import randint
 # store dice results in a list
 dice_list = []
 dice_list_hold = []
+dice_cup = [[0, 'ROLL'],  # die 1
+            [0, 'ROLL'],  # die 2
+            [0, 'ROLL'],  # die 3
+            [0, 'ROLL'],  # die 4
+            [0, 'ROLL'],  # die 5
+            ]
 
 
 def die_roll():
@@ -22,7 +28,7 @@ def show_dice(dice_list):
 
 def text_die(die_value):
     """Generate text rendering of a die for a given r"""
-    pass
+
     C = 'o '
     s = '-----\n|' + C[die_value < 1] + ' ' + C[die_value < 3] + '|\n|' \
         + C[die_value < 5]
@@ -56,6 +62,18 @@ if __name__ == '__main__':
     show_dice(dice_list_hold)
     print(f'Die values to keep: {dice_list_hold}')
 
+    print('Text Graphic of dice:')
+    for die_ in dice_list_hold:
+        text_die(die_ - 1)
+
+    print(f'{dice_cup}')
+
+    print('Set die 2 to value of 5 and status of KEEP')
+
+    dice_cup[1] = [5, 'KEEP']
+
+    print('Updated dice_cup:')
+    print(f'{dice_cup}')
     # **** Test generation of dice text
     # **** Need to next generate roll 2 and 3 and collect die rs
 
