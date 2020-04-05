@@ -3,10 +3,17 @@
 from diceroll.dice import die_roll
 from diceroll.dicegraphic import dice_display
 
+# Lists to store initial rolls and final dice
+
+dice_roll = []
+dice_list_hold = []
+dice_list_hold_idx = []
+final_dice = []
+new_dice_qty = 0
+
 
 def request_dice_to_keep():
     dice_list_hold_idx = input('Dice to keep?: ')
-    print(f'{dice_list_hold_idx}')
     return dice_list_hold_idx
 
 
@@ -17,21 +24,22 @@ def store_dice_to_keep(dice_list_hold_idx, dice_roll):
     return dice_list_hold
 
 
+def get_and_store_dice_to_keep(dice_roll):
+    dice_list_hold_idx = request_dice_to_keep()
+    dice_list_hold = store_dice_to_keep(dice_list_hold_idx, dice_roll)
+    return (dice_list_hold_idx,
+            dice_list_hold,
+            )
+
+
 if __name__ == '__main__':
-
-    # Lists to store initial rolls and final dice
-
-    dice_roll = []
-    dice_list_hold = []
-    dice_list_hold_idx = []
-    final_dice = []
-    new_dice_qty = 0
 
     """This section generates the dice rolls and gets the dice the player
     wants to keep before the next rolls. Will need to set up as a function
     in possibly another module. Will also need to determine if there are
     additional sections that can be put into a function to reduce repitiion.
     """
+
     # Player turn
     # Three rolls per turn
 
@@ -39,18 +47,23 @@ if __name__ == '__main__':
 
     print('First Roll:')
 
+    # First roll is all five dice
     for roll1 in range(1, 6):
         dice_roll.append(die_roll())
 
+    # Show dice
     dice_roll = sorted(dice_roll)
     dice_display(dice_roll)
 
-    dice_list_hold_idx = request_dice_to_keep()
-    dice_list_hold = store_dice_to_keep(dice_list_hold_idx, dice_roll)
+    # Get dice to keep and store for next roll
+    (dice_list_hold_idx,
+     dice_list_hold,
+     ) = get_and_store_dice_to_keep(dice_roll)
 
-    dice_roll = []  # reset for next dice roll
+    # reset for next dice roll
+    dice_roll = []
 
-    # Roll Two
+    # Roll Two - roll dice not kept
 
     print()
     print('Second Roll:')
@@ -66,17 +79,23 @@ if __name__ == '__main__':
     for roll2 in range(1, (new_dice_qty + 1)):
         dice_roll.append(die_roll())
 
+    # Show dice
+    dice_roll = sorted(dice_roll)
     dice_display(dice_roll)
 
-    # Roll Three
+    # Roll Three - roll dice not kept
 
     # Clear dice previously held and request new dice to keep
     dice_list_hold = []
-    dice_list_hold_idx = request_dice_to_keep()
-    dice_list_hold = store_dice_to_keep(dice_list_hold_idx, dice_roll)
 
-    dice_roll = []  # reset for next dice roll
+    (dice_list_hold_idx,
+     dice_list_hold,
+     ) = get_and_store_dice_to_keep(dice_roll)
 
+    # reset for next dice roll
+    dice_roll = []
+
+    print()
     print('Third Roll:')
 
     new_dice_qty = 5 - len(dice_list_hold)
@@ -88,6 +107,8 @@ if __name__ == '__main__':
     for next_roll in range(1, (new_dice_qty + 1)):
         dice_roll.append(die_roll())
 
+    # Show dice
+    dice_roll = sorted(dice_roll)
     dice_display(dice_roll)
 
     print('*** End Turn ***')
