@@ -60,7 +60,7 @@ if __name__ == '__main__':
         dice_list_hold.append(dice_list[idx - 1])
 
     show_dice(dice_list_hold)
-    print(f'Die values to keep: {dice_list_hold}')
+    print(f'Dice to keep: {dice_list_hold}')
 
     print('Text Graphic of dice:')
     for die_ in dice_list_hold:

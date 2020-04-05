@@ -2,6 +2,13 @@
 horizontally by utilizing a list that can be iterated
 """
 
+header = ['--1--',
+          '--2--',
+          '--3--',
+          '--4--',
+          '--5--',
+          ]
+
 dice_set = [
            ['-----',
             '|   |',
@@ -46,7 +53,11 @@ def dice_display(dice_list):
     """For a given list of die values, generate a text graphic of the dice
     horizontally"""
 
-    dice_list = sorted(dice_list)
+    for die_position in range(5):
+        pass
+        print(f'{header[die_position]}' + ' ', end='  ')
+
+    print()
 
     for _ in range(5):
 
@@ -62,6 +73,7 @@ if __name__ == '__main__':
                  6,
                  4,
                  5,
+                 3,
                  ]
 
     print(f'Test set of dice values: {test_list}')
