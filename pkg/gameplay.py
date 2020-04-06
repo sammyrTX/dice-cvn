@@ -22,6 +22,10 @@ def request_dice_to_keep():
 
 def store_dice_to_keep(dice_list_hold_idx, dice_roll):
     dice_list_hold = []
+
+    if dice_list_hold_idx[0].upper() == 'Q':
+        return dice_list_hold
+
     for hold in dice_list_hold_idx:
         dice_list_hold.append(dice_roll[int(hold) - 1])
     return dice_list_hold
@@ -89,36 +93,37 @@ if __name__ == '__main__':
         dice_roll = sorted(dice_roll)
         dice_display(dice_roll)
 
-    # Roll Three - roll dice not kept
-
-    # Clear dice previously held and request new dice to keep
-    dice_list_hold = []
-
-    (dice_list_hold_idx,
-     dice_list_hold,
-     ) = get_and_store_dice_to_keep(dice_roll)
-
-    # Proceed to third roll if not quitting turn after second roll
     if dice_list_hold_idx[0].upper() != 'Q':
+        # Roll Three - roll dice not kept
 
-        # reset for next dice roll
-        dice_roll = []
+        # Clear dice previously held and request new dice to keep
+        dice_list_hold = []
 
-        print()
-        print('Third Roll:')
+        (dice_list_hold_idx,
+         dice_list_hold,
+         ) = get_and_store_dice_to_keep(dice_roll)
 
-        new_dice_qty = 5 - len(dice_list_hold)
+        # Proceed to third roll if not quitting turn after second roll
+        if dice_list_hold_idx[0].upper() != 'Q':
 
-        # Add dice that were kept to the new set of dice
-        for keep_die in dice_list_hold:
-            dice_roll.append(int(keep_die))
+            # reset for next dice roll
+            dice_roll = []
 
-        for next_roll in range(1, (new_dice_qty + 1)):
-            dice_roll.append(die_roll())
+            print()
+            print('Third Roll:')
 
-        # Show dice
-        dice_roll = sorted(dice_roll)
-        dice_display(dice_roll)
+            new_dice_qty = 5 - len(dice_list_hold)
+
+            # Add dice that were kept to the new set of dice
+            for keep_die in dice_list_hold:
+                dice_roll.append(int(keep_die))
+
+            for next_roll in range(1, (new_dice_qty + 1)):
+                dice_roll.append(die_roll())
+
+            # Show dice
+            dice_roll = sorted(dice_roll)
+            dice_display(dice_roll)
 
     final_dice = dice_roll
     print('*** End Turn ***')
