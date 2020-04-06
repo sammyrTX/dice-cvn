@@ -13,7 +13,10 @@ new_dice_qty = 0
 
 
 def request_dice_to_keep():
+    print('Enter dice to keep. "Q" to keep all dice and quit turn.')
     dice_list_hold_idx = input('Dice to keep?: ')
+    if dice_list_hold_idx[0].upper() == 'Q':
+        print('Quitting turn...')
     return dice_list_hold_idx
 
 
@@ -60,28 +63,31 @@ if __name__ == '__main__':
      dice_list_hold,
      ) = get_and_store_dice_to_keep(dice_roll)
 
-    # reset for next dice roll
-    dice_roll = []
+    # Proceed to second roll if not quitting turn after first roll
+    if dice_list_hold_idx[0].upper() != 'Q':
 
-    # Roll Two - roll dice not kept
+        # reset for next dice roll
+        dice_roll = []
 
-    print()
-    print('Second Roll:')
+        # Roll Two - roll dice not kept
 
-    # Get quantity of dice to roll next
-    new_dice_qty = 5 - len(dice_list_hold)
+        print()
+        print('Second Roll:')
 
-    # Add dice that were kept to the new set of dice
-    for keep_die in dice_list_hold:
-        dice_roll.append(int(keep_die))
+        # Get quantity of dice to roll next
+        new_dice_qty = 5 - len(dice_list_hold)
 
-    # Roll dice that were not kept and add to the list
-    for roll2 in range(1, (new_dice_qty + 1)):
-        dice_roll.append(die_roll())
+        # Add dice that were kept to the new set of dice
+        for keep_die in dice_list_hold:
+            dice_roll.append(int(keep_die))
 
-    # Show dice
-    dice_roll = sorted(dice_roll)
-    dice_display(dice_roll)
+        # Roll dice that were not kept and add to the list
+        for roll2 in range(1, (new_dice_qty + 1)):
+            dice_roll.append(die_roll())
+
+        # Show dice
+        dice_roll = sorted(dice_roll)
+        dice_display(dice_roll)
 
     # Roll Three - roll dice not kept
 
@@ -92,23 +98,35 @@ if __name__ == '__main__':
      dice_list_hold,
      ) = get_and_store_dice_to_keep(dice_roll)
 
-    # reset for next dice roll
-    dice_roll = []
+    # Proceed to third roll if not quitting turn after second roll
+    if dice_list_hold_idx[0].upper() != 'Q':
 
-    print()
-    print('Third Roll:')
+        # reset for next dice roll
+        dice_roll = []
 
-    new_dice_qty = 5 - len(dice_list_hold)
+        print()
+        print('Third Roll:')
 
-    # Add dice that were kept to the new set of dice
-    for keep_die in dice_list_hold:
-        dice_roll.append(int(keep_die))
+        new_dice_qty = 5 - len(dice_list_hold)
 
-    for next_roll in range(1, (new_dice_qty + 1)):
-        dice_roll.append(die_roll())
+        # Add dice that were kept to the new set of dice
+        for keep_die in dice_list_hold:
+            dice_roll.append(int(keep_die))
 
-    # Show dice
-    dice_roll = sorted(dice_roll)
-    dice_display(dice_roll)
+        for next_roll in range(1, (new_dice_qty + 1)):
+            dice_roll.append(die_roll())
 
+        # Show dice
+        dice_roll = sorted(dice_roll)
+        dice_display(dice_roll)
+
+    final_dice = dice_roll
     print('*** End Turn ***')
+
+    # Show dice being held for scoring
+    print()
+    print('Here are the dice to be scored:')
+    print()
+    dice_display(final_dice)
+    print()
+    print('Proceed to scoring...')
