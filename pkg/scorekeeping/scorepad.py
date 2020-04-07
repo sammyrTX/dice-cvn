@@ -6,6 +6,7 @@ fixed_scores = {'score_full_house': 25,
                 'score_straight_small': 30,
                 'score_straight_large': 40,
                 'score_kind_five_of': 50,
+                'upper_section_bonus': 35,
                 }
 
 # Lower section categories that use total of dice for score
@@ -49,7 +50,7 @@ class scorepad_:
                          self.upper_sixes,
                          ]
         if sum(upper_section) >= 63:
-            upper_bonus = 35
+            upper_bonus = fixed_scores['upper_section_bonus']
         else:
             upper_bonus = 0
 
