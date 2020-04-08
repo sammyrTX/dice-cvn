@@ -19,18 +19,8 @@ def upper_section_score(die_value, final_dice):
     """
     return final_dice.count(die_value) * die_value
 
-# Review scoring process for small straight  #TODO
 
-
-def score_three_of_a_kind(final_dice):
-    pass
-
-
-def score_four_of_a_kind(final_dice):
-    pass
-
-
-def score_three_or_four_of_a_kind(final_dice, kind_type):
+def score_number_of_a_kind(final_dice, kind_type):
 
     final_dice = sorted(final_dice)
 
@@ -47,6 +37,8 @@ def score_three_or_four_of_a_kind(final_dice, kind_type):
         return sum(final_dice)
     elif kind_type == 4 and kind_type in value_counts:
         return sum(final_dice)
+    elif kind_type == 5 and kind_type in value_counts:
+        return fixed_scores['score_kind_five_of']
     else:
         return 0
 
@@ -87,10 +79,13 @@ def score_large_straight(final_dice):
     if sorted(final_dice) in [[1, 2, 3, 4, 5],
                               [2, 3, 4, 5, 6],
                               ]:
-        print('it is a large straight')
         return fixed_scores['score_straight_large']
     else:
         return 0
+
+
+def score_chance(final_dice):
+    return sum(final_dice)
 
 
 if __name__ == '__main__':
@@ -113,6 +108,9 @@ if __name__ == '__main__':
     check_three_of_a_kind_fail = [2, 3, 5, 5, 1]
     check_four_of_a_kind_fail = [2, 6, 4, 2, 2]
 
+    check_five_of_a_kind_pass = [3, 3, 3, 3, 3]
+    check_five_of_a_kind_fail = [4, 4, 2, 4, 4]
+
     print(f'Score this roll: {pass_this_small_straight}')
     print(f'Score: {score_small_straight(pass_this_small_straight)}')
 
@@ -133,13 +131,24 @@ if __name__ == '__main__':
     print('*' * 50)
     print()
     print(f'Score 3 of a kind pass: {check_three_of_a_kind_pass}')
-    print(f'Score: {score_three_or_four_of_a_kind(check_three_of_a_kind_pass, 3)}')
+    print(f'Score: {score_number_of_a_kind(check_three_of_a_kind_pass, 3)}')
     print()
     print(f'Score 4 of a kind pass: {check_four_of_a_kind_pass}')
-    print(f'Score: {score_three_or_four_of_a_kind(check_four_of_a_kind_pass, 4)}')
+    print(f'Score: {score_number_of_a_kind(check_four_of_a_kind_pass, 4)}')
     print()
     print(f'Score 3 of a kind fail: {check_three_of_a_kind_fail}')
-    print(f'Score: {score_three_or_four_of_a_kind(check_three_of_a_kind_fail, 3)}')
+    print(f'Score: {score_number_of_a_kind(check_three_of_a_kind_fail, 3)}')
     print()
     print(f'Score 4 of a kind fail: {check_four_of_a_kind_fail}')
-    print(f'Score: {score_three_or_four_of_a_kind(check_four_of_a_kind_fail, 4)}')
+    print(f'Score: {score_number_of_a_kind(check_four_of_a_kind_fail, 4)}')
+    print()
+    print(f'Score 5 of a kind pass: {check_five_of_a_kind_pass}')
+    print(f'Score: {score_number_of_a_kind(check_five_of_a_kind_pass, 5)}')
+    print()
+    print(f'Score 5 of a kind fail: {check_five_of_a_kind_fail}')
+    print(f'Score: {score_number_of_a_kind(check_five_of_a_kind_fail, 5)}')
+    print()
+    print('*' * 50)
+    print()
+    print(f'Score chance: {check_three_of_a_kind_pass}')
+    print(f'Score: {score_chance(check_three_of_a_kind_pass)}')
