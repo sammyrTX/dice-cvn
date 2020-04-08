@@ -1,4 +1,4 @@
-"""Game functions to process game play, scoring, etc."""
+"""Calculate score for all categories"""
 
 import numpy as np
 

@@ -1,9 +1,7 @@
-"""Process game play"""
+"""Workflow for a player's turn at rollling the dice"""
 
 from diceroll.dice import die_roll
 from diceroll.dicegraphic import dice_display
-
-from scorekeeping.scorepad import Scorepad_
 
 # Lists to store initial rolls and final dice
 
@@ -48,10 +46,6 @@ if __name__ == '__main__':
     in possibly another module. Will also need to determine if there are
     additional sections that can be put into a function to reduce repitiion.
     """
-
-    # Request player name and instanciate scorepad_ object
-    scorepad = Scorepad_(input('Please enter your name: '))
-    print(f'{scorepad.name}')
 
     # Player turn
     # Three rolls per turn

@@ -17,7 +17,7 @@ lower_section_categories_total_dice_score = ['lower_kind_three_of',
                                              ]
 
 
-class scorepad_:
+class Scorepad_:
     """Store player score for each category"""
     def __init__(self,
                  name,
@@ -40,6 +40,22 @@ class scorepad_:
 
     def __repr__(self):
         return repr(f'Player name ***: {self.name}')
+
+    def turn_tracking(self):
+        self.track_ones = 0
+        self.track_twos = 0
+        self.track_threes = 0
+        self.track_fours = 0
+        self.track_fives = 0
+        self.track_sixes = 0
+        self.track_kind_three_of = 0
+        self.track_kind_four_of = 0
+        self.track_full_house = 0
+        self.track_straight_small = 0
+        self.track_straight_large = 0
+        self.track_kind_five_of = 0
+        self.track_all_dice = 0
+        self.track_bonus = 0
 
     def upper_section_total(self):
         upper_section = [self.upper_ones,
@@ -94,6 +110,7 @@ def lower_section_scoring(score_category, dice_list):
         return total_all_dice(dice_list)
     else:
         return fixed_scores[score_category]
+
 
 if __name__ == '__main__':
     ###############################################################################
