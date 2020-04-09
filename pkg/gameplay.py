@@ -1,5 +1,6 @@
 """Process game play"""
 
+import os
 from diceroll.dice import die_roll
 from diceroll.dicegraphic import dice_display
 
@@ -51,7 +52,7 @@ if __name__ == '__main__':
 
     # Request player name and instanciate scorepad_ object
     scorepad = Scorepad_(input('Please enter your name: '))
-    print(f'{scorepad.name}')
+    print(f'Let\'s start, {scorepad.name}...')
 
     # Player turn
     # Three rolls per turn
@@ -135,9 +136,24 @@ if __name__ == '__main__':
     print('*** End Turn ***')
 
     # Show dice being held for scoring
+    os.system('clear')
     print()
     print('Here are the dice to be scored:')
     print()
     dice_display(final_dice)
     print()
     print('Proceed to scoring...')
+
+    # Assign dice to score category
+
+    print('*** Will Display the current score here ***')
+
+    print('*** Display a menu of available score categories')
+
+    print('*** Input score category selected ***')
+
+
+
+    print('*** Show updated score ***')
+
+    print('*** prompt to start next roll')

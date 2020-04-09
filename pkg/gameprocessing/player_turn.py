@@ -1,7 +1,9 @@
 """Workflow for a player's turn at rollling the dice"""
 
-from diceroll.dice import die_roll
-from diceroll.dicegraphic import dice_display
+from .. diceroll.dice import dice_roll
+
+# from diceroll.dice import die_roll
+# from diceroll.dicegraphic import dice_display
 
 # Lists to store initial rolls and final dice
 

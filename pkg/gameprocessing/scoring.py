@@ -88,6 +88,10 @@ def score_chance(final_dice):
     return sum(final_dice)
 
 
+def process_category_selection(final_dice, scorepad):
+    pass
+
+
 if __name__ == '__main__':
 
     pass_this_list = [1, 1, 3, 4, 1, 2, 3, 3, 3,]
