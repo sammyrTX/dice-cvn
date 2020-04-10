@@ -1,28 +1,9 @@
 """Test scoring process"""
 
-import sys
 from .. scorekeeping.scorepad import Scorepad_
 from .. gameprocessing.scoring import process_category_selection
 
-# Selection choices list
-
-selection_choices = ['1',
-                     '2',
-                     '3',
-                     '4',
-                     '5',
-                     '6',
-                     'a',
-                     'b',
-                     'c',
-                     'd',
-                     'e',
-                     'f',
-                     'g',
-                     'h',
-                     ]
-
-# Final Dice samples by category
+# Final Dice samples by category dict
 """dict setup for sample dice
     pass/fail: test type to confirm pass or a fail
     category description
@@ -31,7 +12,7 @@ selection_choices = ['1',
     tracking flag : 1 - score applied, 0 - score not applied
     object attribute name : from Scorepad_ Class - score
     object attribute name : from Scorepad_ Class - tracking flag
-    selection menu item : choice entered by user
+    selection menu item : choice input by user
 """
 
 sample_dice = {'pass': {'ones': [[1, 1, 3, 5, 1], 3, 1, 'upper_ones', 'track_ones', '1'],
@@ -47,9 +28,9 @@ sample_dice = {'pass': {'ones': [[1, 1, 3, 5, 1], 3, 1, 'upper_ones', 'track_one
                         'large_straight': [[1, 2, 3, 4, 5], 40, 1, 'lower_straight_large', 'track_straight_large', 'e'],
                         'five_of_a_kind': [[3, 3, 3, 3, 3], 50, 1, 'lower_kind_five_of', 'track_kind_five_of', 'f'],
                         'any_dice': [[3, 3, 1, 2, 5], 14, 1, 'lower_all_dice', 'track_all_dice', 'g'],
-                        'bonus': [[], 100, 1, 'lower_bonus', 'track_bonus', 'h']
+                        'bonus': [[3, 3, 3, 3, 3], 100, 1, 'lower_bonus', 'track_bonus', 'h']
                         },
-               'fail': {'ones': [[3, 2, 2, 5, 1], 0, 0, 'upper_ones', 'track_ones', '1'],
+               'fail': {'ones': [[3, 2, 2, 5, 6], 0, 0, 'upper_ones', 'track_ones', '1'],
                         'twos': [[1, 6, 1, 5, 1], 0, 0, 'upper_twos', 'track_twos', '2'],
                         'threes': [[1, 2, 1, 5, 1], 0, 0, 'upper_threes', 'track_threes', '3'],
                         'fours': [[1, 2, 1, 5, 1], 0, 0, 'upper_fours', 'track_fours', '4'],
@@ -61,8 +42,9 @@ sample_dice = {'pass': {'ones': [[1, 1, 3, 5, 1], 3, 1, 'upper_ones', 'track_one
                         'small_straight': [[1, 2, 3, 5, 3], 0, 0, 'lower_straight_small', 'track_straight_small', 'd'],
                         'large_straight': [[1, 2, 3, 4, 6], 0, 0, 'lower_straight_large', 'track_straight_large', 'e'],
                         'five_of_a_kind': [[3, 2, 1, 5, 4], 0, 0, 'lower_kind_five_of', 'track_kind_five_of', 'f'],
-                        'any_dice': [[4, 3, 1, 6, 1], 15, 0, 'lower_all_dice', 'track_all_dice', 'g'],
-                        'bonus': [[], 99, 0, 'lower_bonus', 'track_bonus', 'h']
+                        'any_dice': [[4, 3, 5, 6, 2], 20, 1, 'lower_all_dice', 'track_all_dice', 'g'],  # Only need to total dice,
+                                                     # nothing to validate
+                        'bonus': [[3, 6, 2, 2, 4], 0, 0, 'lower_bonus', 'track_bonus', 'h']
                         },
                }
 
@@ -108,27 +90,6 @@ def test_full_house_fail():
     assert score_test.lower_full_house == 0 and score_test.track_full_house == 0
 
 
-def test_full_house2():
-    score_test = Scorepad_('Tester')
-    score_check = ['lower_full_house',
-                   'score_test.lower_kind_three_of',
-                   ]
-
-    # final_dice = [3, 5, 3, 3, 5]
-    # selection = 'c'
-
-    score_test = process_category_selection(sample_dice['pass']['full_house'][0],
-                                            selection_choices[8].upper(),
-                                            score_test,
-                                            )
-
-    # assert score_test.lower_full_house == sample_dice['pass']['full_house'][1] and score_test.track_full_house == sample_dice['pass']['full_house'][2]
-
-    # assert score_test.lower_full_house == sample_dice['pass']['full_house'][1] and score_test.track_full_house == sample_dice['pass']['full_house'][2]
-
-    assert getattr(score_test, sample_dice['pass']['full_house'][3]) == sample_dice['pass']['full_house'][1] and score_test.track_full_house == sample_dice['pass']['full_house'][2]
-
-
 def test_all_pass01():
     """Iterate through all possible selection choices and test expected values
     """
@@ -144,20 +105,31 @@ def test_all_pass01():
         assert getattr(score_test, _[3]) == _[1] and getattr(score_test, _[4]) == _[2]
 
 
-        # [[3, 3, 1, 5, 3], 9, 1, 'upper_threes', 'track_threes', '3']
-
-        # process_category_selection(final_dice, selection, scorepad):
-
-        # sample_dice = {'pass': {'ones': [[1, 2, 1, 5, 1], 3, 1, 'upper_ones', 'track_ones', '1'],
-
-
 for _ in sample_dice['pass'].values():
 
-    def test_all_pass():
+    def test_all_pass02():
 
-        score_test = Scorepad_('Tester2')
+        score_test = Scorepad_('Tester-Pass')
         score_test.track_kind_five_of = 1  # It is zero since test always
-                                           # with an empty scorepad object
+                                           # starts with an empty scorepad
+                                           # object
+        score_test = process_category_selection(_[0],
+                                                _[5].upper(),
+                                                score_test,
+                                                )
+
+        assert getattr(score_test, _[3]) == _[1] and getattr(score_test, _[4]) == _[2]
+
+
+def test_all_fail():
+    """Iterate through all possible selection choices and test expected values
+    Testing for incorrect dice being passed and to validate they will not score
+    and be tracked as completed.
+    """
+    score_test = Scorepad_('Tester-Fail')
+
+    for _ in sample_dice['fail'].values():
+
         score_test = process_category_selection(_[0],
                                                 _[5].upper(),
                                                 score_test,
