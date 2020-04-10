@@ -111,7 +111,7 @@ def validate_bonus(scorepad):  #  Need to add code to validate
     Bonus is awarded when there has already been one five of a kind and there
     are still at least one category that has not yet been scored.
     """
-    pass
+    return True
 
 
 def process_category_selection(final_dice, selection, scorepad):
@@ -153,12 +153,17 @@ def process_category_selection(final_dice, selection, scorepad):
         else:
             print('*** ERROR - INVALID UPPER SECTION SELECTION ***')
 
+        if scorepad.lower_full_house != 0:
+            scorepad.track_full_house = 1
+
     if selection == 'A':  # Three of a Kind
         scorepad.lower_kind_three_of = score_number_of_a_kind(final_dice,
                                                               3,
                                                               scorepad,
                                                               )
         scorepad.track_kind_three_of = 1
+        if scorepad.lower_full_house != 0:
+            scorepad.track_full_house = 1
 
     if selection == 'B':  # Four of a Kind
         scorepad.lower_kind_four_of = score_number_of_a_kind(final_dice,
@@ -166,12 +171,15 @@ def process_category_selection(final_dice, selection, scorepad):
                                                              scorepad,
                                                              )
         scorepad.track_kind_four_of = 1
+        if scorepad.lower_full_house != 0:
+            scorepad.track_full_house = 1
 
     if selection == 'C':  # Full House
         scorepad.lower_full_house = score_full_house(final_dice,
                                                      scorepad,
                                                      )
-        scorepad.track_full_house = 1
+        if scorepad.lower_full_house != 0:
+            scorepad.track_full_house = 1
 
     if selection == 'D':  # Small Straight
         scorepad.lower_straight_small = score_small_straight(final_dice,
@@ -180,7 +188,7 @@ def process_category_selection(final_dice, selection, scorepad):
         scorepad.track_straight_small = 1
 
     if selection == 'E':  # Large Straight
-        scorepad.lower_straight_large = score_small_straight(final_dice,
+        scorepad.lower_straight_large = score_large_straight(final_dice,
                                                              scorepad,
                                                              )
         scorepad.track_straight_large = 1
