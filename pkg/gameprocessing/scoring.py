@@ -21,7 +21,7 @@ def upper_section_score(die_value,
     that value the total score is 6 (die value of 3 times a count of two)
     """
 
-    if die_value in range[1,7]:
+    if die_value in range(1, 7):
         return final_dice.count(die_value) * die_value
     else:
         return 0
@@ -208,68 +208,41 @@ def process_category_selection(final_dice, selection, scorepad):
 
 if __name__ == '__main__':
 
-    # Add scorepad object for testing below. Need to add to arguments as well
+    # Create function test of scoring system  #TODO
+    #
     #  TODO
 
-    pass_this_list = [1, 1, 3, 4, 1, 2, 3, 3, 3,]
-    die_value = int(input('Enter a value to count in the list: '))
-    print(f'Count of {die_value}s in a list ({pass_this_list}) : {pass_this_list.count(die_value)}')
-    print(f'Score is {upper_section_score(die_value, pass_this_list)}')
+    import sys
 
-    pass_this_small_straight = [1, 2, 3, 4, 6]
+    print('Running as __main__')
 
-    pass_this_large_straight = [1, 2, 3, 4, 5]
+    for _ in sys.path:
+        print(_)
+    print('=' * 50)
 
-    pass_full_house_fail = [1, 2, 3, 3, 3]
-    pass_full_house_pass = [2, 2, 2, 6, 6]  #[1, 5, 5, 1, 5]
-    pass_full_house_pass2 = [1, 5, 5, 1, 5]
+    from .. scorekeeping.scorepad import Scorepad_
 
-    check_three_of_a_kind_pass = [5, 3, 5, 5, 1]
-    check_four_of_a_kind_pass = [2, 2, 4, 2, 2]
-    check_three_of_a_kind_fail = [2, 3, 5, 5, 1]
-    check_four_of_a_kind_fail = [2, 6, 4, 2, 2]
+    score_keep = Scorepad_('Player')
 
-    check_five_of_a_kind_pass = [3, 3, 3, 3, 3]
-    check_five_of_a_kind_fail = [4, 4, 2, 4, 4]
+    print(f'{score_keep.name}')
 
-    print(f'Score this roll: {pass_this_small_straight}')
-    print(f'Score: {score_small_straight(pass_this_small_straight)}')
+    # final_dice = [1, 1, 1, 3, 1]
+    # selection = '1'
 
-    print(f'Score this roll: {pass_this_small_straight}')
-    print(f'Score: {score_small_straight(pass_this_small_straight)}')
-    print()
-    print(f'Score this roll: {pass_this_large_straight}')
-    print(f'Score: {score_large_straight(pass_this_large_straight)}')
-    print()
-    print(f'Score full house fail roll: {pass_full_house_fail}')
-    print(f'Score: {score_full_house(pass_full_house_fail)}')
-    print()
-    print(f'Score full house pass roll: {pass_full_house_pass}')
-    print(f'Score: {score_full_house(pass_full_house_pass)}')
-    print()
-    print(f'Score full house pass roll 2: {pass_full_house_pass2}')
-    print(f'Score: {score_full_house(pass_full_house_pass2)}')
-    print('*' * 50)
-    print()
-    print(f'Score 3 of a kind pass: {check_three_of_a_kind_pass}')
-    print(f'Score: {score_number_of_a_kind(check_three_of_a_kind_pass, 3)}')
-    print()
-    print(f'Score 4 of a kind pass: {check_four_of_a_kind_pass}')
-    print(f'Score: {score_number_of_a_kind(check_four_of_a_kind_pass, 4)}')
-    print()
-    print(f'Score 3 of a kind fail: {check_three_of_a_kind_fail}')
-    print(f'Score: {score_number_of_a_kind(check_three_of_a_kind_fail, 3)}')
-    print()
-    print(f'Score 4 of a kind fail: {check_four_of_a_kind_fail}')
-    print(f'Score: {score_number_of_a_kind(check_four_of_a_kind_fail, 4)}')
-    print()
-    print(f'Score 5 of a kind pass: {check_five_of_a_kind_pass}')
-    print(f'Score: {score_number_of_a_kind(check_five_of_a_kind_pass, 5)}')
-    print()
-    print(f'Score 5 of a kind fail: {check_five_of_a_kind_fail}')
-    print(f'Score: {score_number_of_a_kind(check_five_of_a_kind_fail, 5)}')
-    print()
-    print('*' * 50)
-    print()
-    print(f'Score chance: {check_three_of_a_kind_pass}')
-    print(f'Score: {score_chance(check_three_of_a_kind_pass)}')
+    final_dice = [3, 5, 3, 3, 5]
+    selection = 'c'
+
+
+    score_keep = process_category_selection(final_dice,
+                                            selection.upper(),
+                                            score_keep,
+                                            )
+    print(f'final dice list: {final_dice}')
+    print(f'score_keep.upper_ones = {score_keep.upper_ones}')
+    print(f'score_keep.track_ones = {score_keep.track_ones}')
+    print(f'score_keep.upper_twos = {score_keep.upper_twos}')
+    print(f'score_keep.track_twos = {score_keep.track_twos}')
+    print(f'score_keep.upper_threes = {score_keep.upper_threes}')
+    print(f'score_keep.track_threes = {score_keep.track_threes}')
+    print(f'score_keep.lower_full_house = {score_keep.lower_full_house}')
+    print(f'score_keep.track_track_full_house = {score_keep.track_full_house}')

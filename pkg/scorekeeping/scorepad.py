@@ -37,11 +37,6 @@ class Scorepad_:
         self.lower_kind_five_of = 0
         self.lower_all_dice = 0
         self.lower_bonus = 0
-
-    def __repr__(self):
-        return repr(f'Player name ***: {self.name}')
-
-    def turn_tracking(self):
         self.track_ones = 0
         self.track_twos = 0
         self.track_threes = 0
@@ -56,6 +51,9 @@ class Scorepad_:
         self.track_kind_five_of = 0
         self.track_all_dice = 0
         self.track_bonus = 0
+
+    def __repr__(self):
+        return repr(f'Player name ***: {self.name}')
 
     def upper_section_total(self):
         upper_section = [self.upper_ones,
