@@ -36,6 +36,7 @@ class Scorepad_:
         self.lower_straight_large = 0
         self.lower_kind_five_of = 0
         self.lower_all_dice = 0
+        self.lower_bonus_count = 0
         self.lower_bonus = 0
         self.track_ones = 0
         self.track_twos = 0
@@ -51,9 +52,17 @@ class Scorepad_:
         self.track_kind_five_of = 0
         self.track_all_dice = 0
         self.track_bonus = 0
+        self.upper_section_total_show = self.upper_section_total()
 
     def __repr__(self):
         return repr(f'Player name ***: {self.name}')
+
+    def upper_section_bonus_calc(self):
+
+        if self.upper_section_total() >= 63:
+            return fixed_scores['upper_section_bonus']
+        else:
+            return 0
 
     def upper_section_total(self):
         upper_section = [self.upper_ones,
@@ -63,12 +72,12 @@ class Scorepad_:
                          self.upper_fives,
                          self.upper_sixes,
                          ]
-        if sum(upper_section) >= 63:
-            upper_bonus = fixed_scores['upper_section_bonus']
-        else:
-            upper_bonus = 0
 
-        return sum(upper_section) + upper_bonus
+        return sum(upper_section)
+
+    def upper_section_total_and_bonus(self):
+
+        return self.upper_section_total() + self.upper_section_bonus_calc()
 
     def lower_section_total(self):
         lower_section = [self.lower_kind_three_of,
@@ -84,7 +93,7 @@ class Scorepad_:
         return sum(lower_section)
 
     def grand_total(self):
-        return self.upper_section_total() + self.lower_section_total()
+        return self.upper_section_total_and_bonus() + self.lower_section_total()
 
 
 def total_all_dice(dice_list):
