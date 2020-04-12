@@ -56,15 +56,21 @@ if __name__ == '__main__':
     """Test score display and formatting"""
     scorepad = Scorepad_('Test-Display')
 
-    scorepad.upper_ones = 1
-    scorepad.upper_twos = 20
-    scorepad.upper_threes = 30
-    scorepad.upper_fours = 40
-    scorepad.upper_fives = 50
-    scorepad.upper_sixes = 60
-    scorepad.lower_straight_small = 35
-    scorepad.lower_bonus_count = 3
-    scorepad.lower_bonus = 300
+    scorepad.upper_ones = 6
+    scorepad.upper_twos = 12
+    scorepad.upper_threes = 18
+    scorepad.upper_fours = 24
+    scorepad.upper_fives = 30
+    scorepad.upper_sixes = 36
+    scorepad.lower_kind_three_of = 20
+    scorepad.lower_kind_four_of = 10
+    scorepad.lower_full_house = 25
+    scorepad.lower_straight_small = 30
+    scorepad.lower_straight_large = 40
+    scorepad.lower_kind_five_of = 50
+    scorepad.lower_all_dice = 6
+    scorepad.lower_bonus_count = 1
+    scorepad.lower_bonus = 100
 
     xxx = scorepad.upper_section_total()
     show_current_score(scorepad,

@@ -1,9 +1,11 @@
-"""Workflow for a player's turn at rollling the dice"""
+"""Process game play"""
 
-from .. diceroll.dice import dice_roll
+import os
+from .. diceroll.dice import die_roll
+from .. diceroll.dicegraphic import dice_display
 
-# from diceroll.dice import die_roll
-# from diceroll.dicegraphic import dice_display
+from .. scorekeeping.scorepad import Scorepad_
+from .. scorekeeping.scoredisplay import show_current_score
 
 # Lists to store initial rolls and final dice
 
@@ -48,6 +50,10 @@ if __name__ == '__main__':
     in possibly another module. Will also need to determine if there are
     additional sections that can be put into a function to reduce repitiion.
     """
+
+    # Request player name and instanciate scorepad_ object
+    scorepad = Scorepad_(input('Please enter your name: '))
+    print(f'Let\'s start, {scorepad.name}...')
 
     # Player turn
     # Three rolls per turn
@@ -131,9 +137,47 @@ if __name__ == '__main__':
     print('*** End Turn ***')
 
     # Show dice being held for scoring
+    os.system('clear')
     print()
     print('Here are the dice to be scored:')
     print()
+
     dice_display(final_dice)
     print()
+    print('Current Score:')
+
+    show_current_score(scorepad,
+                       scorepad.upper_section_total(),
+                       scorepad.upper_section_bonus_calc(),
+                       scorepad.upper_section_total_and_bonus(),
+                       scorepad.lower_section_total(),
+                       scorepad.grand_total(),
+                       )
+    # print('scorepad attributes:')
+    # print(dir(scorepad))
+
+    # for _ in dir(scorepad):
+    #     print(_)
+
+    scorepad.upper_fives = 50
+
+    for _ in dir(scorepad):
+        if _.startswith('track'):
+            print(f'{_}   ', end='')
+            print(getattr(scorepad, _))
+
     print('Proceed to scoring...')
+
+    # Assign dice to score category
+
+    print('*** Will Display the current score here ***')
+
+    print('*** Display a menu of available score categories')
+
+    print('*** Input score category selected ***')
+
+
+
+    print('*** Show updated score ***')
+
+    print('*** prompt to start next roll')
