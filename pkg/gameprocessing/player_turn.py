@@ -4,8 +4,11 @@ import os
 from .. diceroll.dice import die_roll
 from .. diceroll.dicegraphic import dice_display
 
+from . menu import menu_categories
+
 from .. scorekeeping.scorepad import Scorepad_
 from .. scorekeeping.scoredisplay import show_current_score
+
 
 # Lists to store initial rolls and final dice
 
@@ -153,18 +156,6 @@ if __name__ == '__main__':
                        scorepad.lower_section_total(),
                        scorepad.grand_total(),
                        )
-    # print('scorepad attributes:')
-    # print(dir(scorepad))
-
-    # for _ in dir(scorepad):
-    #     print(_)
-
-    scorepad.upper_fives = 50
-
-    for _ in dir(scorepad):
-        if _.startswith('track'):
-            print(f'{_}   ', end='')
-            print(getattr(scorepad, _))
 
     print('Proceed to scoring...')
 
@@ -173,6 +164,8 @@ if __name__ == '__main__':
     print('*** Will Display the current score here ***')
 
     print('*** Display a menu of available score categories')
+
+    menu_categories(scorepad)
 
     print('*** Input score category selected ***')
 
