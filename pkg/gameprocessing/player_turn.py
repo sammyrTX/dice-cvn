@@ -147,6 +147,8 @@ if __name__ == '__main__':
 
     dice_display(final_dice)
     print()
+    print('*** Will Display the current score here ***')
+    print()
     print('Current Score:')
 
     show_current_score(scorepad,
@@ -160,8 +162,6 @@ if __name__ == '__main__':
     print('Proceed to scoring...')
 
     # Assign dice to score category
-
-    print('*** Will Display the current score here ***')
 
     print('*** Display a menu of available score categories')
 

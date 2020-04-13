@@ -61,11 +61,13 @@ def menu_categories(scorepad):
 
     for idx, _ in enumerate(sorted(menu_list)):
 
-        if (idx + 1)%2 == 0:
+        if (idx + 1)%4 == 0:
             print(_[1])
         else:
             pad = 25 - len(_[1])
             print(_[1], end=(' ' * pad))
+
+    print()
 
 
 if __name__ == '__main__':
