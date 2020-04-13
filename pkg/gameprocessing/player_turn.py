@@ -5,6 +5,8 @@ from .. diceroll.dice import die_roll
 from .. diceroll.dicegraphic import dice_display
 
 from . menu import menu_categories
+from . score_selection import get_player_selection
+from . score_selection import process_category_selection
 
 from .. scorekeeping.scorepad import Scorepad_
 from .. scorekeeping.scoredisplay import show_current_score
@@ -169,8 +171,24 @@ if __name__ == '__main__':
 
     print('*** Input score category selected ***')
 
+    selection = get_player_selection()
 
+    # Process score
+
+    scorepad = process_category_selection(final_dice,
+                                          selection,
+                                          scorepad,
+                                          )
 
     print('*** Show updated score ***')
+
+    show_current_score(scorepad,
+                       scorepad.upper_section_total(),
+                       scorepad.upper_section_bonus_calc(),
+                       scorepad.upper_section_total_and_bonus(),
+                       scorepad.lower_section_total(),
+                       scorepad.grand_total(),
+                       )
+
 
     print('*** prompt to start next roll')

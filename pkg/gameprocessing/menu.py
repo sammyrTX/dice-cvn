@@ -57,7 +57,7 @@ def menu_categories(scorepad):
 
     print('=' * 50)
 
-    print('MENU LIST (sorted)')
+    print('MENU LIST')
 
     for idx, _ in enumerate(sorted(menu_list)):
 
