@@ -121,7 +121,10 @@ def process_category_selection(final_dice,
     """Based on selection from user calculate and populate scorepad object with
     score and return object"""
 
+    selection = selection.upper()  # convert selection to uppercase
+
     # Update score for selection of 1's through 6's
+
     if selection in ['1',
                      '2',
                      '3',
