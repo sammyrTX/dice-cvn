@@ -12,15 +12,6 @@ from .. scorekeeping.scorepad import Scorepad_
 from .. scorekeeping.scoredisplay import show_current_score
 
 
-# Lists to store initial rolls and final dice
-
-dice_roll = []
-dice_list_hold = []
-dice_list_hold_idx = []
-final_dice = []
-new_dice_qty = 0
-
-
 def request_dice_to_keep():
     print('Enter dice to keep. "Q" to keep all dice and quit turn.')
     dice_list_hold_idx = input('Dice to keep?: ')
@@ -48,17 +39,20 @@ def get_and_store_dice_to_keep(dice_roll):
             )
 
 
-if __name__ == '__main__':
-
+def player_turn(scorepad):
     """This section generates the dice rolls and gets the dice the player
     wants to keep before the next rolls. Will need to set up as a function
     in possibly another module. Will also need to determine if there are
     additional sections that can be put into a function to reduce repitiion.
     """
 
-    # Request player name and instanciate scorepad_ object
-    scorepad = Scorepad_(input('Please enter your name: '))
-    print(f'Let\'s start, {scorepad.name}...')
+    # Lists to store initial rolls and final dice
+
+    dice_roll = []
+    dice_list_hold = []
+    dice_list_hold_idx = []
+    final_dice = []
+    new_dice_qty = 0
 
     # Player turn
     # Three rolls per turn
@@ -139,7 +133,6 @@ if __name__ == '__main__':
             dice_display(dice_roll)
 
     final_dice = dice_roll
-    print('*** End Turn ***')
 
     # Show dice being held for scoring
     os.system('clear')
@@ -190,5 +183,17 @@ if __name__ == '__main__':
                        scorepad.grand_total(),
                        )
 
-
+    print('*** End Turn ***')
     print('*** prompt to start next roll')
+
+
+if __name__ == '__main__':
+
+    # Name input needs to be either in a main starting point module or
+    # as a mini function
+
+    # Request player name and instanciate scorepad_ object
+    scorepad = Scorepad_(input('Please enter your name: '))
+    print(f'Let\'s start, {scorepad.name}...')
+
+    player_turn(scorepad)

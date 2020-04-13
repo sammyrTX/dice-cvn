@@ -121,15 +121,6 @@ def process_category_selection(final_dice,
     """Based on selection from user calculate and populate scorepad object with
     score and return object"""
 
-    # Test > remove before flight
-    print('*' * 80)
-    print('>>> Inside process_category_selection')
-    selection = selection.upper()
-    print(f'Selection passed: {selection}')
-    print(f'selection uppercase: {selection.upper()}')
-    print(f'Dice passed: {final_dice}')
-    print('*' * 80)
-
     # Update score for selection of 1's through 6's
     if selection in ['1',
                      '2',
