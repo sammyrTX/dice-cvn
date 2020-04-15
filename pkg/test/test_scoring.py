@@ -28,7 +28,7 @@ sample_dice = {'pass': {'ones': [[1, 1, 3, 5, 1], 3, 1, 'upper_ones', 'track_one
                         'large_straight': [[1, 2, 3, 4, 5], 40, 1, 'lower_straight_large', 'track_straight_large', 'e'],
                         'five_of_a_kind': [[3, 3, 3, 3, 3], 50, 1, 'lower_kind_five_of', 'track_kind_five_of', 'f'],
                         'any_dice': [[3, 3, 1, 2, 5], 14, 1, 'lower_all_dice', 'track_all_dice', 'g'],
-                        'bonus': [[3, 3, 3, 3, 3], 100, 1, 'lower_bonus', 'track_bonus', 'h']
+                        'bonus': [[3, 3, 3, 3, 3], 100, 1, 'lower_bonus', 'bonus_counter', 'h']
                         },
                'fail': {'ones': [[3, 2, 2, 5, 6], 0, 0, 'upper_ones', 'track_ones', '1'],
                         'twos': [[1, 6, 1, 5, 1], 0, 0, 'upper_twos', 'track_twos', '2'],
@@ -44,7 +44,7 @@ sample_dice = {'pass': {'ones': [[1, 1, 3, 5, 1], 3, 1, 'upper_ones', 'track_one
                         'five_of_a_kind': [[3, 2, 1, 5, 4], 0, 0, 'lower_kind_five_of', 'track_kind_five_of', 'f'],
                         'any_dice': [[4, 3, 5, 6, 2], 20, 1, 'lower_all_dice', 'track_all_dice', 'g'],  # Only need to total dice,
                                                      # nothing to validate
-                        'bonus': [[3, 6, 2, 2, 4], 0, 0, 'lower_bonus', 'track_bonus', 'h']
+                        'bonus': [[3, 6, 2, 2, 4], 0, 0, 'lower_bonus', 'bonus_counter', 'h']
                         },
                }
 

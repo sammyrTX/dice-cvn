@@ -35,8 +35,25 @@ menu_items = {'track_ones': [1, '1 - Ones'],
               'track_straight_large': [11, 'E - Large Straight'],
               'track_kind_five_of': [12, 'F - Five of a Kind'],
               'track_all_dice': [13, 'G - Any Dice'],
-              'track_bonus': [14, 'H - Five of a Kind Bonus'],
+              'bonus_counter': [14, 'H - Five of a Kind Bonus'],
               }
+
+
+def scorepad_available_scores(scorepad):
+    """Iterate through scorepad for tracking attributes and save categories
+    available and not available to a dict
+    """
+    score_status = {'AVAILABLE': [],
+                    'NOT AVAILABLE': [],
+                    }
+
+    for _ in dir(scorepad):
+        if _.startswith('track'):
+            if getattr(scorepad, _) == 0:
+                score_status['AVAILABLE'].append(_)
+            else: score_status['NOT AVAILABLE'].append(_)
+
+    return score_status
 
 
 def menu_categories(scorepad):
@@ -44,16 +61,17 @@ def menu_categories(scorepad):
     build and display only categories that have not already been assigned.
     """
 
-    available_choices = []
+    # available_choices = []
     menu_list = []
+    score_status = dict
 
-    for _ in dir(scorepad):
-        if _.startswith('track'):
-            if getattr(scorepad, _) == 0:
-                available_choices.append(_)
+    score_status = scorepad_available_scores(scorepad)
 
-    for _ in available_choices:
+    for _ in score_status['AVAILABLE']:
         menu_list.append(menu_items[_])
+
+    # Append bonus counter since it does not have track prefix
+    menu_list.append([14, 'H - Five of a Kind Bonus'])
 
     print('=' * 50)
 

@@ -51,7 +51,7 @@ class Scorepad_:
         self.track_straight_large = 0
         self.track_kind_five_of = 0
         self.track_all_dice = 0
-        self.track_bonus = 0
+        self.bonus_counter = 0
         self.upper_section_total_show = self.upper_section_total()
 
     def __repr__(self):
@@ -124,7 +124,7 @@ if __name__ == '__main__':
     # Object Testing
 
 
-    player1 = scorepad_('Johnny')
+    player1 = Scorepad_('Johnny')
 
     print(f'Name of player is {player1.name}')
     print(f'Upper Section Scores:')

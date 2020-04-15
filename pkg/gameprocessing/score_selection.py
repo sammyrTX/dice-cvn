@@ -27,6 +27,7 @@ valid_keys = ['1',
               'H',
               ]
 
+
 def get_player_selection():
     """Prompt player for category choice for scoring to update scorepad
     """

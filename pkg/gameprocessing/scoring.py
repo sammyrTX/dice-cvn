@@ -35,11 +35,11 @@ def score_number_of_a_kind(final_dice,
     final_dice = sorted(final_dice)
 
     check_dice = np.array(final_dice)
-    print(f'numpy test: {check_dice}')
 
     (unique, counts) = np.unique(check_dice, return_counts=True)
     check_counts = np.asarray((unique, counts)).T
     value_counts = []
+
     for _ in check_counts:
         value_counts.append(_[1])
 
@@ -60,7 +60,6 @@ def score_full_house(final_dice,
     final_dice = sorted(final_dice)
 
     check_full_house = np.array(final_dice)
-    print(f'numpy test: {check_full_house}')
 
     (unique, counts) = np.unique(check_full_house, return_counts=True)
     check_counts = np.asarray((unique, counts)).T
@@ -76,8 +75,6 @@ def score_small_straight(final_dice,
                          ):
     final_dice = sorted(final_dice)
     final_dice = final_dice[0:4]
-
-    print(f'final dice: {final_dice}')
 
     small_straigh_list = [[1, 2, 3, 4,],
                           [2, 3, 4, 5,],
@@ -257,11 +254,11 @@ def process_category_selection(final_dice,
 
             if scorepad.track_kind_five_of == 1 and validate_bonus(scorepad):
                 scorepad.lower_bonus += 100
-                scorepad.track_bonus += 1
+                scorepad.bonus_counter += 1
             else:
-                scorepad.track_bonus = 0
+                scorepad.bonus_counter = 0
         else:
-            scorepad.track_bonus = 0
+            scorepad.bonus_counter = 0
 
     return scorepad
 
