@@ -242,11 +242,7 @@ def process_category_selection(final_dice,
             if scorepad.track_kind_five_of == 1 and validate_bonus(scorepad):
                 scorepad.lower_bonus += 100
                 scorepad.bonus_counter += 1
-            else:
-                scorepad.bonus_counter = 0
-        else:
-            scorepad.bonus_counter = 0
-
+                return scorepad
     return scorepad
 
 

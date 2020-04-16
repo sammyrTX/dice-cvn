@@ -28,7 +28,8 @@ sample_dice = {'pass': {'ones': [[1, 1, 3, 5, 1], 3, 1, 'upper_ones', 'track_one
                         'large_straight': [[1, 2, 3, 4, 5], 40, 1, 'lower_straight_large', 'track_straight_large', 'e'],
                         'five_of_a_kind': [[3, 3, 3, 3, 3], 50, 1, 'lower_kind_five_of', 'track_kind_five_of', 'f'],
                         'any_dice': [[3, 3, 1, 2, 5], 14, 1, 'lower_all_dice', 'track_all_dice', 'g'],
-                        'bonus': [[3, 3, 3, 3, 3], 100, 1, 'lower_bonus', 'bonus_counter', 'h']
+                        # See separate test for bonus
+                        # 'bonus': [[3, 3, 3, 3, 3], 100, 1, 'lower_bonus', 'bonus_counter', 'h']
                         },
                'fail': {'ones': [[3, 2, 2, 5, 6], 0, 1, 'upper_ones', 'track_ones', '1'],
                         'twos': [[1, 6, 1, 5, 1], 0, 1, 'upper_twos', 'track_twos', '2'],
@@ -46,7 +47,7 @@ sample_dice = {'pass': {'ones': [[1, 1, 3, 5, 1], 3, 1, 'upper_ones', 'track_one
                         # Only need to total dice, nothing to validate
                         'any_dice': [[4, 3, 5, 6, 2], 20, 1, 'lower_all_dice', 'track_all_dice', 'g'],
 
-                        # Will need to create separate test for bonus
+                        # See separate test for bonus
                         # 'bonus': [[3, 6, 2, 2, 4], 0, 1, 'lower_bonus', 'bonus_counter', 'h'],
                         },
                }
@@ -208,7 +209,7 @@ def test_bonus_first_fail():
                                             score_test,
                                             )
 
-    assert score_test.lower_bonus == 100 and score_test.bonus_counter == 1
+    assert score_test.lower_bonus == 0 and score_test.bonus_counter == 0
 
 
 def test_bonus_second_fail():
@@ -223,7 +224,7 @@ def test_bonus_second_fail():
     score_test.bonus_counter = 1
     score_test.lower_bonus = 100
 
-    # Five of a kind dice
+    # Invalid Five of a kind dice
     final_dice = [2, 2, 2, 3, 2]
 
     # Bonus selection
@@ -234,4 +235,4 @@ def test_bonus_second_fail():
                                             score_test,
                                             )
 
-    assert score_test.lower_bonus == 200 and score_test.bonus_counter == 2
+    assert score_test.lower_bonus == 100 and score_test.bonus_counter == 1
