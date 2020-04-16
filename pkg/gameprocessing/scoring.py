@@ -43,7 +43,7 @@ def score_number_of_a_kind(final_dice,
     for _ in check_counts:
         value_counts.append(_[1])
 
-    if kind_type == 3 and kind_type in value_counts:
+    if kind_type == 3 and (kind_type in value_counts or kind_type + 1 in value_counts):
         return sum(final_dice)
     elif kind_type == 4 and kind_type in value_counts:
         return sum(final_dice)
@@ -73,14 +73,23 @@ def score_full_house(final_dice,
 def score_small_straight(final_dice,
                          scorepad,
                          ):
-    final_dice = sorted(final_dice)
-    final_dice = final_dice[0:4]
+
+    final_dice = set(final_dice)
+    final_dice = str(sorted(final_dice)).strip('[]')
 
     small_straigh_list = [[1, 2, 3, 4,],
                           [2, 3, 4, 5,],
                           [3, 4, 5, 6,],
                           ]
-    if final_dice in small_straigh_list:
+
+    confirm_small_straight = False
+
+    for _ in small_straigh_list:
+        if str(_).strip('[]') in final_dice:
+            confirm_small_straight = True
+            break
+
+    if confirm_small_straight:
         return fixed_scores['score_straight_small']
     else:
         return 0
@@ -135,117 +144,86 @@ def process_category_selection(final_dice,
                                           scorepad,
                                           )
 
-        if selection == '1':
+        if selection == '1' and scorepad.track_ones == 0:
             scorepad.upper_ones += upper_score
-            if upper_score == 0:
-                scorepad.track_ones = 0
-            else:
-                scorepad.track_ones = 1
+            scorepad.track_ones = 1
 
-        elif selection == '2':
+        elif selection == '2' and scorepad.track_twos == 0:
             scorepad.upper_twos += upper_score
-            if upper_score == 0:
-                scorepad.track_twos = 0
-            else:
-                scorepad.track_twos = 1
+            scorepad.track_twos = 1
 
-        elif selection == '3':
+        elif selection == '3' and scorepad.track_threes == 0:
             scorepad.upper_threes += upper_score
-            if upper_score == 0:
-                scorepad.track_threes = 0
-            else:
-                scorepad.track_threes = 1
+            scorepad.track_threes = 1
 
-        elif selection == '4':
+        elif selection == '4' and scorepad.track_fours == 0:
             scorepad.upper_fours += upper_score
-            if upper_score == 0:
-                scorepad.track_fours = 0
-            else:
-                scorepad.track_fours = 1
+            scorepad.track_fours = 1
 
-        elif selection == '5':
+        elif selection == '5' and scorepad.track_fives == 0:
             scorepad.upper_fives += upper_score
-            if upper_score == 0:
-                scorepad.track_fives = 0
-            else:
-                scorepad.track_fives = 1
+            scorepad.track_fives = 1
 
-        elif selection == '6':
+        elif selection == '6' and scorepad.track_sixes == 0:
             scorepad.upper_sixes += upper_score
-            if upper_score == 0:
-                scorepad.track_sixes = 0
-            else:
-                scorepad.track_sixes = 1
+            scorepad.track_sixes = 1
         else:
             print('*** ERROR - INVALID UPPER SECTION SELECTION ***')
 
-    if selection == 'A':  # Three of a Kind
+    # Three of a Kind
+    if selection == 'A' and scorepad.track_kind_three_of == 0:
         scorepad.lower_kind_three_of = score_number_of_a_kind(final_dice,
                                                               3,
                                                               scorepad,
                                                               )
-        if scorepad.lower_kind_three_of == 0:
-            scorepad.track_kind_three_of = 0
-        else:
-            scorepad.track_kind_three_of = 1
+        scorepad.track_kind_three_of = 1
 
-    if selection == 'B':  # Four of a Kind
+    # Four of a Kind
+    if selection == 'B' and scorepad.track_kind_four_of == 0:
         scorepad.lower_kind_four_of = score_number_of_a_kind(final_dice,
                                                              4,
                                                              scorepad,
                                                              )
-        if scorepad.lower_kind_four_of == 0:
-            scorepad.track_kind_four_of = 0
-        else:
-            scorepad.track_kind_four_of = 1
+        scorepad.track_kind_four_of = 1
 
-    if selection == 'C':  # Full House
+    # Full House
+    if selection == 'C' and scorepad.track_full_house == 0:
         scorepad.lower_full_house = score_full_house(final_dice,
                                                      scorepad,
                                                      )
-        if scorepad.lower_full_house == 0:
-            scorepad.track_full_house = 0
-        else:
-            scorepad.track_full_house = 1
+        scorepad.track_full_house = 1
 
-    if selection == 'D':  # Small Straight
+    # Small Straight
+    if selection == 'D' and scorepad.track_straight_small == 0:
         scorepad.lower_straight_small = score_small_straight(final_dice,
                                                              scorepad,
                                                              )
-        if scorepad.lower_straight_small == 0:
-            scorepad.track_straight_small = 0
-        else:
-            scorepad.track_straight_small = 1
+        scorepad.track_straight_small = 1
 
-    if selection == 'E':  # Large Straight
+    # Large Straight
+    if selection == 'E' and scorepad.track_straight_large == 0:
         scorepad.lower_straight_large = score_large_straight(final_dice,
                                                              scorepad,
                                                              )
-        if scorepad.lower_straight_large == 0:
-            scorepad.track_straight_large = 0
-        else:
-            scorepad.track_straight_large = 1
+        scorepad.track_straight_large = 1
 
-    if selection == 'F':  # Five of a Kind
+    # Five of a Kind
+    if selection == 'F' and scorepad.track_kind_five_of == 0:
         scorepad.lower_kind_five_of = score_number_of_a_kind(final_dice,
                                                              5,
                                                              scorepad,
                                                              )
-        if scorepad.lower_kind_five_of == 0:
-            scorepad.track_kind_five_of = 0
-        else:
-            scorepad.track_kind_five_of = 1
+        scorepad.track_kind_five_of = 1
 
-    if selection == 'G':  # Total all dice
+    # Total all dice
+    if selection == 'G' and scorepad.track_all_dice == 0:
         scorepad.lower_all_dice = score_chance(final_dice,
                                                scorepad,
                                                )
-        if scorepad.lower_all_dice == 0:
-            scorepad.track_all_dice = 0
-        else:
-            scorepad.track_all_dice = 1
+        scorepad.track_all_dice = 1
 
-    if selection == 'H':  # Bonus for additional Five of a Kind
+    # Bonus for additional Five of a Kind
+    if selection == 'H':
         # Confirm dice are five of a kind
         if score_number_of_a_kind(final_dice,
                                   5,
@@ -265,9 +243,7 @@ def process_category_selection(final_dice,
 
 if __name__ == '__main__':
 
-    # Create function test of scoring system  #TODO
-    #
-    #  TODO
+    # Test code. See test package for pytest funcitonal tests.
 
     import sys
 
@@ -286,19 +262,27 @@ if __name__ == '__main__':
     # final_dice = [1, 1, 1, 3, 1]
     # selection = '1'
 
-    final_dice = [3, 5, 3, 3, 5]
-    selection = 'c'
+    # final_dice = [3, 5, 3, 3, 5]
+    # final_dice = [1, 2, 2, 3, 4]
+    final_dice = [4, 4, 4, 4, 5]
+    selection = 'a'
 
     score_keep = process_category_selection(final_dice,
                                             selection.upper(),
                                             score_keep,
                                             )
     print(f'final dice list: {final_dice}')
-    print(f'score_keep.upper_ones = {score_keep.upper_ones}')
-    print(f'score_keep.track_ones = {score_keep.track_ones}')
-    print(f'score_keep.upper_twos = {score_keep.upper_twos}')
-    print(f'score_keep.track_twos = {score_keep.track_twos}')
-    print(f'score_keep.upper_threes = {score_keep.upper_threes}')
-    print(f'score_keep.track_threes = {score_keep.track_threes}')
-    print(f'score_keep.lower_full_house = {score_keep.lower_full_house}')
-    print(f'score_keep.track_track_full_house = {score_keep.track_full_house}')
+    print(f'score_keep.lower_kind_three_of = {score_keep.lower_kind_three_of}')
+
+    # print(f'score_keep.lower_straight_small = {score_keep.lower_straight_small}')
+
+    score_number_of_a_kind
+
+    # print(f'score_keep.upper_ones = {score_keep.upper_ones}')
+    # print(f'score_keep.track_ones = {score_keep.track_ones}')
+    # print(f'score_keep.upper_twos = {score_keep.upper_twos}')
+    # print(f'score_keep.track_twos = {score_keep.track_twos}')
+    # print(f'score_keep.upper_threes = {score_keep.upper_threes}')
+    # print(f'score_keep.track_threes = {score_keep.track_threes}')
+    # print(f'score_keep.lower_full_house = {score_keep.lower_full_house}')
+    # print(f'score_keep.track_track_full_house = {score_keep.track_full_house}')

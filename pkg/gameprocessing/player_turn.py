@@ -1,6 +1,8 @@
 """Process game play"""
 
 import os
+import sys
+
 from .. diceroll.dice import die_roll
 from .. diceroll.dicegraphic import dice_display
 
@@ -17,7 +19,13 @@ def request_dice_to_keep():
     while True:
         try:
             print('Enter dice to keep. "Q" to keep all dice and quit turn.')
+            print('"0" to roll all dice. "Z" to quit game.')
             dice_list_hold_idx = input('Dice to keep?: ')
+
+            if dice_list_hold_idx[0].upper() == 'Z':
+                os.system('clear')
+                print('Exiting game...')
+                sys.exit(0)
             if dice_list_hold_idx[0].upper() == 'Q':
                 print('Quitting turn...')
             return dice_list_hold_idx
@@ -174,6 +182,8 @@ def player_turn(scorepad):
                                               selection,
                                               scorepad,
                                               )
+
+        os.system('clear')
 
         # Show updated score
         show_current_score(scorepad,

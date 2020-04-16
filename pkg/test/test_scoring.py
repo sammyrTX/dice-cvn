@@ -30,21 +30,24 @@ sample_dice = {'pass': {'ones': [[1, 1, 3, 5, 1], 3, 1, 'upper_ones', 'track_one
                         'any_dice': [[3, 3, 1, 2, 5], 14, 1, 'lower_all_dice', 'track_all_dice', 'g'],
                         'bonus': [[3, 3, 3, 3, 3], 100, 1, 'lower_bonus', 'bonus_counter', 'h']
                         },
-               'fail': {'ones': [[3, 2, 2, 5, 6], 0, 0, 'upper_ones', 'track_ones', '1'],
-                        'twos': [[1, 6, 1, 5, 1], 0, 0, 'upper_twos', 'track_twos', '2'],
-                        'threes': [[1, 2, 1, 5, 1], 0, 0, 'upper_threes', 'track_threes', '3'],
-                        'fours': [[1, 2, 1, 5, 1], 0, 0, 'upper_fours', 'track_fours', '4'],
-                        'fives': [[1, 2, 3, 4, 1], 0, 0, 'upper_fives', 'track_fives', '5'],
-                        'sixes': [[4, 2, 1, 5, 1], 0, 0, 'upper_sixes', 'track_sixes', '6'],
-                        'three_of_a_kind': [[1, 2, 6, 5, 1], 0, 0, 'lower_kind_three_of', 'track_kind_three_of', 'a'],
-                        'four_of_a_kind': [[1, 3, 1, 5, 1], 0, 0, 'lower_kind_four_of', 'track_kind_four_of', 'b'],
-                        'full_house': [[1, 2, 4, 6, 1], 0, 0, 'lower_full_house', 'track_full_house', 'c'],
-                        'small_straight': [[1, 2, 3, 5, 3], 0, 0, 'lower_straight_small', 'track_straight_small', 'd'],
-                        'large_straight': [[1, 2, 3, 4, 6], 0, 0, 'lower_straight_large', 'track_straight_large', 'e'],
-                        'five_of_a_kind': [[3, 2, 1, 5, 4], 0, 0, 'lower_kind_five_of', 'track_kind_five_of', 'f'],
-                        'any_dice': [[4, 3, 5, 6, 2], 20, 1, 'lower_all_dice', 'track_all_dice', 'g'],  # Only need to total dice,
-                                                     # nothing to validate
-                        'bonus': [[3, 6, 2, 2, 4], 0, 0, 'lower_bonus', 'bonus_counter', 'h']
+               'fail': {'ones': [[3, 2, 2, 5, 6], 0, 1, 'upper_ones', 'track_ones', '1'],
+                        'twos': [[1, 6, 1, 5, 1], 0, 1, 'upper_twos', 'track_twos', '2'],
+                        'threes': [[1, 2, 1, 5, 1], 0, 1, 'upper_threes', 'track_threes', '3'],
+                        'fours': [[1, 2, 1, 5, 1], 0, 1, 'upper_fours', 'track_fours', '4'],
+                        'fives': [[1, 2, 3, 4, 1], 0, 1, 'upper_fives', 'track_fives', '5'],
+                        'sixes': [[4, 2, 1, 5, 1], 0, 1, 'upper_sixes', 'track_sixes', '6'],
+                        'three_of_a_kind': [[1, 2, 6, 5, 1], 0, 1, 'lower_kind_three_of', 'track_kind_three_of', 'a'],
+                        'four_of_a_kind': [[1, 3, 1, 5, 1], 0, 1, 'lower_kind_four_of', 'track_kind_four_of', 'b'],
+                        'full_house': [[1, 2, 4, 6, 1], 0, 1, 'lower_full_house', 'track_full_house', 'c'],
+                        'small_straight': [[1, 2, 3, 5, 3], 0, 1, 'lower_straight_small', 'track_straight_small', 'd'],
+                        'large_straight': [[1, 2, 3, 4, 6], 0, 1, 'lower_straight_large', 'track_straight_large', 'e'],
+                        'five_of_a_kind': [[3, 2, 1, 5, 4], 0, 1, 'lower_kind_five_of', 'track_kind_five_of', 'f'],
+
+                        # Only need to total dice, nothing to validate
+                        'any_dice': [[4, 3, 5, 6, 2], 20, 1, 'lower_all_dice', 'track_all_dice', 'g'],
+
+                        # Will need to create separate test for bonus
+                        # 'bonus': [[3, 6, 2, 2, 4], 0, 1, 'lower_bonus', 'bonus_counter', 'h'],
                         },
                }
 
@@ -87,7 +90,7 @@ def test_full_house_fail():
                                             score_test,
                                             )
 
-    assert score_test.lower_full_house == 0 and score_test.track_full_house == 0
+    assert score_test.lower_full_house == 0 and score_test.track_full_house == 1
 
 
 def test_all_pass01():
