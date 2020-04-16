@@ -5,7 +5,7 @@ from . player_turn import player_turn
 from . menu import scorepad_available_scores
 
 from .. scorekeeping.scorepad import Scorepad_
-
+from .. scorekeeping.scoredisplay import show_current_score
 
 def game_status(scorepad):
     """Check score categories to determine if player has used up all available
@@ -16,7 +16,7 @@ def game_status(scorepad):
 
     # Determine if there are available scores in order to conutune rolling
     # If there is at least one category left return True else False
-    if len(score_status) > 0:
+    if len(score_status['AVAILABLE']) > 0:
         return True
     else:
         return False
@@ -39,6 +39,21 @@ def start_game():
             else:
                 break
         break
+
+    os.system('clear')
+
+    print('Final Score:')
+
+    show_current_score(scorepad,
+                       scorepad.upper_section_total(),
+                       scorepad.upper_section_bonus_calc(),
+                       scorepad.upper_section_total_and_bonus(),
+                       scorepad.lower_section_total(),
+                       scorepad.grand_total(),
+                       )
+    print()
+    print(f'Thanks for playing! Your final score is {scorepad.grand_total()}')
+    print()
 
 
 if __name__ == '__main__':
