@@ -2,6 +2,8 @@
 
 import numpy as np
 
+from . menu import scorepad_available_scores
+
 # Points for fixed score categories in Dict
 
 fixed_scores = {'score_full_house': 25,
@@ -112,12 +114,19 @@ def score_chance(final_dice,
     return sum(final_dice)
 
 
-def validate_bonus(scorepad):  #  Need to add code to validate
+def validate_bonus(scorepad):
     """Need to check if bonus scoring is valid.
     Bonus is awarded when there has already been one five of a kind and there
     are still at least one category that has not yet been scored.
     """
-    return True
+    score_tracking = scorepad_available_scores(scorepad)
+
+    print(f'********** len(score_tracking["AVAILABLE"]: {len(score_tracking["AVAILABLE"])}')
+
+    if len(score_tracking["AVAILABLE"]) > 0 and scorepad.lower_kind_five_of == 50:
+        return True
+    else:
+        return False
 
 
 def process_category_selection(final_dice,
@@ -262,17 +271,33 @@ if __name__ == '__main__':
     # final_dice = [1, 1, 1, 3, 1]
     # selection = '1'
 
-    # final_dice = [3, 5, 3, 3, 5]
-    # final_dice = [1, 2, 2, 3, 4]
-    final_dice = [4, 4, 4, 4, 5]
-    selection = 'a'
+    score_keep.bonus_counter = 1
+    score_keep.lower_bonus = 100
+    score_keep.track_kind_five_of = 1
+    score_keep.lower_kind_five_of = 50
+    final_dice = [4, 4, 4, 4, 4]
+    selection = 'h'
 
     score_keep = process_category_selection(final_dice,
                                             selection.upper(),
                                             score_keep,
                                             )
+
+    print(f'scorepad.track_kind_five_of: {score_keep.track_kind_five_of}')
+
+    print(f'score_keep.lower_kind_five_of : {score_keep.lower_kind_five_of}')
+    print(f'selection; {selection}')
     print(f'final dice list: {final_dice}')
-    print(f'score_keep.lower_kind_three_of = {score_keep.lower_kind_three_of}')
+
+    print(score_number_of_a_kind(final_dice,
+                                 5,
+                                 score_keep,
+                                 ))
+
+
+    print(f'score_keep.lower_bonus : {score_keep.lower_bonus}')
+    print(f'score_keep.bonus_counter : {score_keep.bonus_counter}')
+
 
     # print(f'score_keep.lower_straight_small = {score_keep.lower_straight_small}')
 

@@ -139,3 +139,99 @@ def test_all_fail():
                                                 )
 
         assert getattr(score_test, _[3]) == _[1] and getattr(score_test, _[4]) == _[2]
+
+
+def test_bonus_first_pass():
+
+    score_test = Scorepad_('Tester-Pass')
+
+    # Set five of a kind score to 50 and tracker to 1
+    score_test.lower_kind_five_of = 50
+    score_test.track_kind_five_of = 1
+
+    # Five of a kind dice
+    final_dice = [4, 4, 4, 4, 4]
+
+    # Bonus selection
+    selection = 'h'
+
+    score_test = process_category_selection(final_dice,
+                                            selection.upper(),
+                                            score_test,
+                                            )
+
+    assert score_test.lower_bonus == 100 and score_test.bonus_counter == 1
+
+
+def test_bonus_second_pass():
+
+    score_test = Scorepad_('Tester-Pass')
+
+    # Set five of a kind score to 50 and tracker to 1
+    score_test.lower_kind_five_of = 50
+    score_test.track_kind_five_of = 1
+
+    # One bonus has already been scored
+    score_test.bonus_counter = 1
+    score_test.lower_bonus = 100
+
+    # Five of a kind dice
+    final_dice = [2, 2, 2, 2, 2]
+
+    # Bonus selection
+    selection = 'h'
+
+    score_test = process_category_selection(final_dice,
+                                            selection.upper(),
+                                            score_test,
+                                            )
+
+    assert score_test.lower_bonus == 200 and score_test.bonus_counter == 2
+
+
+def test_bonus_first_fail():
+
+    score_test = Scorepad_('Tester-Pass')
+
+    # Set five of a kind score to 50 and tracker to 1
+    score_test.lower_kind_five_of = 50
+    score_test.track_kind_five_of = 1
+
+    # Not Five of a kind dice
+    final_dice = [1, 4, 4, 4, 4]
+
+    # Bonus selection
+    selection = 'h'
+
+    score_test = process_category_selection(final_dice,
+                                            selection.upper(),
+                                            score_test,
+                                            )
+
+    assert score_test.lower_bonus == 100 and score_test.bonus_counter == 1
+
+
+def test_bonus_second_fail():
+
+    score_test = Scorepad_('Tester-Pass')
+
+    # Set five of a kind score to 50 and tracker to 1
+    score_test.lower_kind_five_of = 50
+    score_test.track_kind_five_of = 1
+
+    # One bonus has already been scored
+    score_test.bonus_counter = 1
+    score_test.lower_bonus = 100
+
+    # Five of a kind dice
+    final_dice = [2, 2, 2, 3, 2]
+
+    # Bonus selection
+    selection = 'h'
+
+    score_test = process_category_selection(final_dice,
+                                            selection.upper(),
+                                            score_test,
+                                            )
+
+    assert score_test.lower_bonus == 200 and score_test.bonus_counter == 2
