@@ -53,6 +53,7 @@ class Scorepad_:
         self.track_all_dice = 0
         self.bonus_counter = 0
         self.upper_section_total_show = self.upper_section_total()
+        self.available_choices = self.initialize_choices_list()
 
     def __repr__(self):
         return repr(f'Player name ***: {self.name}')
@@ -95,6 +96,26 @@ class Scorepad_:
     def grand_total(self):
         return self.upper_section_total_and_bonus() + self.lower_section_total()
 
+    def initialize_choices_list(self):
+        """Returns a list of choices that are availble and as player makes a
+        selection during the game, the choice is removed from this list.
+        """
+
+        return ['1',  # Ones
+                '2',  # Twos
+                '3',  # Threes
+                '4',  # Fours
+                '5',  # Fives
+                '6',  # Sixes
+                'A',  # Three of a Kind
+                'B',  # Four of a Kind
+                'C',  # Full House
+                'D',  # Small Straight
+                'E',  # Large Straight
+                'F',  # Five of a Kind
+                'G',  # Any Dice
+                'H',  # Five of a Kind Bonus
+                ]
 
 def total_all_dice(dice_list):
     return sum(dice_list)

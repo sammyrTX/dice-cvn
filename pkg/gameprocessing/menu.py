@@ -79,7 +79,7 @@ def menu_categories(scorepad):
 
     for idx, _ in enumerate(sorted(menu_list)):
 
-        if (idx + 1)%4 == 0:
+        if (idx + 1) % 4 == 0:
             print(_[1])
         else:
             pad = 25 - len(_[1])
@@ -104,3 +104,19 @@ if __name__ == '__main__':
 
     menu_categories(testpad)
 
+    print()
+    print('=' * 60)
+    print()
+
+    x = scorepad_available_scores(testpad)
+
+    print('+' * 60)
+    print("menu_items[x['AVAILABLE'][2]][1][0]")
+    print(menu_items[x['AVAILABLE'][2]][1][0])
+    print('+' * 60)
+
+    # use to iterate through items in the menu_items dict and get the first
+    # letter of the corresponding choices
+    for _1 in x["AVAILABLE"]:
+
+        print(menu_items[_1][1][0])

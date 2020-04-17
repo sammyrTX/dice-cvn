@@ -175,13 +175,17 @@ def player_turn(scorepad):
         menu_categories(scorepad)
 
         # Prompt and input player selection
-        selection = get_player_selection()
+        selection = get_player_selection(scorepad)
 
         # Process score
         scorepad = process_category_selection(final_dice,
                                               selection,
                                               scorepad,
                                               )
+
+        # Remove player selection from available choices attribute
+
+        scorepad.available_choices.remove(selection.upper())
 
         os.system('clear')
 
