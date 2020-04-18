@@ -1,4 +1,8 @@
-"""Process game play"""
+"""Process game play
+
+*NOTE - pkg/gameplay.py is an initial test file and will be eventually
+        removed.
+"""
 
 import os
 from diceroll.dice import die_roll
