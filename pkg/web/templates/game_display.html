@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h1>Get dice roll and update/render here</h1>
+
+{{dice_list}}
+
+{% for items in dice_list %}
+    <img class="img1" src="{{url_for('static', filename='images/dice3.png')}}" width="100" height="100"/>
+<p>{{ items }}</p>
+
+{{dice1}}
+
+{% endfor %}
+
+{% endblock %}
