@@ -41,13 +41,12 @@ def game_display():
         # dice_list.append(die_roll())
         dice_list.append(dice_png[die_roll() - 1])
 
-    print(f'dice_list: {dice_list}')
+    dice_list = sorted(dice_list)
 
-    dice1 = '<img class="img1" src="{{url_for("static", filename="images/dice3.png")}}" width="100" height="100"/>'
+    print(f'dice_list: {dice_list}')
 
     return render_template('game_display.html',
                            dice_list=dice_list,
-                           dice1=dice1,
                            )
 
     # return render_template('game_display.html')

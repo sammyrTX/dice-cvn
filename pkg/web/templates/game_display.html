@@ -4,14 +4,92 @@
 
 <h1>Get dice roll and update/render here</h1>
 
-{{dice_list}}
+<p></p>
 
-{% for items in dice_list %}
-    <img class="img1" src="{{url_for('static', filename='images/dice3.png')}}" width="100" height="100"/>
-<p>{{ items }}</p>
+<div class="container">
 
-{{dice1}}
+  <div class="row">
+    <div class="col-sm">
+    <p class="font-weight-bolder"> ---- ONE ----</p>
+    </div>
+    <div class="col-sm">
+    <p class="font-weight-bolder">---- TWO ----</p>
+    </div>
+    <div class="col-sm">
+    <p class="font-weight-bolder">---- THREE ----</p>
+    </div>
+    <div class="col-sm">
+    <p class="font-weight-bolder">---- FOUR ----</p>
+    </div>
+    <div class="col-sm">
+    <p class="font-weight-bolder">---- FIVE ----</p>
+    </div>
+  </div>
 
-{% endfor %}
+  <div class="row">
+
+    <div class="col-sm">
+    <img class="img1" src="{{url_for('static', filename=dice_list[0])}}" width="100" height="100"/>
+    </div>
+
+    <div class="col-sm">
+    <img class="img1" src="{{url_for('static', filename=dice_list[1])}}" width="100" height="100"/>
+    </div>
+
+    <div class="col-sm">
+    <img class="img1" src="{{url_for('static', filename=dice_list[2])}}" width="100" height="100"/>
+    </div>
+
+    <div class="col-sm">
+    <img class="img1" src="{{url_for('static', filename=dice_list[3])}}" width="100" height="100"/>
+    </div>
+
+    <div class="col-sm">
+    <img class="img1" src="{{url_for('static', filename=dice_list[4])}}" width="100" height="100"/>
+    </div>
+
+  </div>
+
+  <div class="row">
+
+    <div class="col-sm">
+      <input class="btn btn-primary" type="button" value="Keep #1">
+    </div>
+
+    <div class="col-sm">
+      <input class="btn btn-primary" type="button" value="Keep #2">
+    </div>
+
+    <div class="col-sm">
+      <input class="btn btn-primary" type="button" value="Keep #3">
+    </div>
+
+    <div class="col-sm">
+      <input class="btn btn-primary" type="button" value="Keep #4">
+    </div>
+
+    <div class="col-sm">
+      <input class="btn btn-primary" type="button" value="Keep #5">
+    </div>
+
+  </div>
+
+
+</div>
+
+<p></p>
+<p></p>
+
+<div class="container">
+  <div class="row">
+    <div class="text-center">
+      <div class="btn-group" role="group" aria-label="Basic example">
+        <button type="button" class="btn btn-secondary">Roll Dice</button>
+        <button type="button" class="btn btn-secondary">Keep Dice</button>
+        <button type="button" class="btn btn-secondary">Exit Game</button>
+      </div>
+    </div>
+  </div>
+</div>
 
 {% endblock %}
