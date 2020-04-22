@@ -54,6 +54,7 @@ class Scorepad_:
         self.bonus_counter = 0
         self.upper_section_total_show = self.upper_section_total()
         self.available_choices = self.initialize_choices_list()
+        self.web_turn_tracking = 0
 
     def __repr__(self):
         return repr(f'Player name ***: {self.name}')

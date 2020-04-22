@@ -7,6 +7,7 @@ from . menu import scorepad_available_scores
 from .. scorekeeping.scorepad import Scorepad_
 from .. scorekeeping.scoredisplay import show_current_score
 
+
 def game_status(scorepad):
     """Check score categories to determine if player has used up all available
     scores. Return True to continue playing or False to complete game.
