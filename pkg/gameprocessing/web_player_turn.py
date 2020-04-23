@@ -3,7 +3,13 @@
 import os
 import sys
 
-from .. diceroll.dice import die_roll
+from flask import (Flask,
+                   render_template,
+                   )
+
+from .. diceroll.dice import (die_roll,
+                              dice_png,
+                              )
 from .. diceroll.dicegraphic import dice_display
 
 from . menu import menu_categories
@@ -12,6 +18,7 @@ from . score_selection import process_category_selection
 
 from .. scorekeeping.scorepad import Scorepad_
 from .. scorekeeping.scoredisplay import show_current_score
+from .. web.forms import DiceHold
 
 
 def request_dice_to_keep():
@@ -59,14 +66,28 @@ def web_player_turn(scorepad):
 
     # Lists to store initial rolls and final dice
 
+    dice_list = []
+    dice_hold = {}
+
     dice_roll = []
     dice_list_hold = []
     dice_list_hold_idx = []
     final_dice = []
     new_dice_qty = 0
+    form = DiceHold()
 
     # Player turn
     # Three rolls per turn
+
+    if scorepad.web_turn_tracking == 0:
+
+        origin = '*** ROLL ONE TEST ***'
+        return render_template('game_display.html',
+                               dice_list=dice_list,
+                               form=form,
+                               dice_hold=dice_hold,
+                               origin=origin,
+                               )
 
     while True:
         # Roll One - roll all five dice
@@ -77,10 +98,33 @@ def web_player_turn(scorepad):
         for roll1 in range(1, 6):
             dice_roll.append(die_roll())
 
-        # Show dice via HTML
         dice_roll = sorted(dice_roll)
 
-        dice_display(dice_roll)  # <<<< Replace code here to render HTML
+        # dice_display(dice_roll)  # <<<< Replace code here to render HTML
+
+        for _ in range(1, 6):
+            dice_list.append(dice_png[die_roll() - 1])
+
+        dice_list = sorted(dice_list)
+
+        print(f'dice_list: {dice_list}')  # REMOVE BEFORE FLIGHT
+
+        if form.validate_on_submit():
+            dice_hold = form.dice_hold.data
+            form.dice_hold.data = ''
+
+        origin = '*** ROLL ONE ***'
+
+        return render_template('game_display.html',
+                               dice_list=dice_list,
+                               form=form,
+                               dice_hold=dice_hold,
+                               origin=origin,
+                               )
+
+
+
+
 
         # TODO
         # Need to build HTML that will show all dice and then accept held dice
@@ -221,7 +265,7 @@ if __name__ == '__main__':
 
     while True:
 
-        player_turn(scorepad)
+        web_player_turn(scorepad)
         input('Press enter to continue')
         break
 

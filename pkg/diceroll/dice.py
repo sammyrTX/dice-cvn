@@ -12,6 +12,15 @@ dice_cup = [[0, 'ROLL'],  # die 1
             [0, 'ROLL'],  # die 5
             ]
 
+# Dice image paths
+dice_png = ['images/dice1.png',
+            'images/dice2.png',
+            'images/dice3.png',
+            'images/dice4.png',
+            'images/dice5.png',
+            'images/dice6.png',
+            ]
+
 
 def die_roll():
     """Generate a random number between 1 and 6"""
