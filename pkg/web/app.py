@@ -2,9 +2,13 @@
 
 from flask import (Flask,
                    render_template,
+                   redirect,
+                   url_for,
                    )
 
-from . forms import DiceHold
+from . forms import (DiceHold,
+                     DiceHoldWeb,
+                     )
 
 from .. diceroll.dice import (die_roll,
                               dice_png,
@@ -19,7 +23,6 @@ from .. scorekeeping.scorepad import Scorepad_
 from .. scorekeeping.scoredisplay import show_current_score
 
 
-
 app = Flask(__name__)
 
 app.config['SECRET_KEY'] = 'toASMuE59soIk7*9jA*F'
@@ -30,12 +33,13 @@ def index():
     return render_template('index.html')  # '<h1>Hello World</h1'
 
 
-@app.route('/web_start_game')
+@app.route('/web_start_game', methods=['GET', 'POST'])
 def web_start_game():
 
-# *** Resume here to manage game play for players turn***
-# coninue working on rendering HTML after first roll and then gather
-# player selections for dice to hold
+    # *** Resume here to manage game play for players turn***
+    # coninue working on rendering HTML after first roll and then gather
+    # player selections for dice to hold
+    # Also need to store dice values kept and add to new rolls
 
     """Web main function to initiate game."""
 
@@ -50,12 +54,36 @@ def web_start_game():
 
     scorepad.web_turn_tracking = 1
 
-    testform = DiceHold()
+    dice_hold_web_form = DiceHoldWeb()
+
+    if dice_hold_web_form.validate_on_submit():
+        die1 = dice_hold_web_form.die1.data
+        die2 = dice_hold_web_form.die2.data
+        die3 = dice_hold_web_form.die3.data
+        die4 = dice_hold_web_form.die4.data
+        die5 = dice_hold_web_form.die5.data
+
+        dice_hold_web_form.die1.data = ''
+        dice_hold_web_form.die2.data = ''
+        dice_hold_web_form.die3.data = ''
+        dice_hold_web_form.die4.data = ''
+        dice_hold_web_form.die5.data = ''
+
+        scorepad.web_turn_tracking = 99
+
+        # dice_hold = testform.dice_hold.data
+        # testform.dice_hold.data = ''
+
+        return redirect(url_for('roll_two',
+                                die1=die1,
+                                scorepad=scorepad,
+                                ))
 
     return render_template('roll_one.html',
                            scorepad=scorepad,
-                           testform=testform,
+                           dice_hold_web_form=dice_hold_web_form,
                            )
+
 
 @app.route('/roll_one/<scorepad>/<dice_list>/<turn_track>')
 def roll_one(scorepad, dice_list, turn_track):
@@ -72,10 +100,20 @@ def roll_one(scorepad, dice_list, turn_track):
                            )
 
 
-@app.route('/roll_two')
-def roll_two():
+@app.route('/roll_two/<die1>/<scorepad>')
+def roll_two(die1, scorepad):
     """Second roll of a turn. Roll up to five dice"""
-    pass
+    print(f'******* ROLL TWO ROUTE **************')
+    print(f'die1: {die1}')
+    print(f'scorpad: {scorepad}')
+    dice_list = ['images/dice3.png', 'images/dice3.png', 'images/dice2.png', 'images/dice3.png', 'images/dice3.png']
+
+    return render_template('roll_two.html',
+                           scorepad=scorepad,
+                           dice_list=dice_list,
+                           die1=die1
+                           # turn_track=scorepad.web_turn_tracking,
+                           )
 
 
 @app.route('/roll_three')

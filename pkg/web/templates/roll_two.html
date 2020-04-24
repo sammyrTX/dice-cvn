@@ -1,0 +1,134 @@
+{% extends "base.html" %}
+
+{% block title %}dice-cvn{% endblock %}
+
+{% block content %}
+
+<h1>Roll # 2</h1>
+
+<h1>Get dice roll and update/render here</h1>
+<h1>die1: {{die1}}</h1>
+<h2>scorepad.name {{scorepad.name}}</h2>
+<h2>scorepad.web_dice_list {{scorepad.web_dice_list}}</h2>
+
+<p></p>
+
+<div class="container">
+
+  <div class="row">
+    <div class="col-sm">
+    <p class="font-weight-bolder"> ---- ONE ----</p>
+    </div>
+    <div class="col-sm">
+    <p class="font-weight-bolder">---- TWO ----</p>
+    </div>
+    <div class="col-sm">
+    <p class="font-weight-bolder">---- THREE ----</p>
+    </div>
+    <div class="col-sm">
+    <p class="font-weight-bolder">---- FOUR ----</p>
+    </div>
+    <div class="col-sm">
+    <p class="font-weight-bolder">---- FIVE ----</p>
+    </div>
+  </div>
+
+  <div class="row">
+
+    <div class="col-sm">
+    <img class="img1" src="{{url_for('static', filename=dice_list[0])}}" width="100" height="100"/>
+    </div>
+
+    <div class="col-sm">
+    <img class="img1" src="{{url_for('static', filename=dice_list[1])}}" width="100" height="100"/>
+    </div>
+
+    <div class="col-sm">
+    <img class="img1" src="{{url_for('static', filename=dice_list[2])}}" width="100" height="100"/>
+    </div>
+
+    <div class="col-sm">
+    <img class="img1" src="{{url_for('static', filename=dice_list[3])}}" width="100" height="100"/>
+    </div>
+
+    <div class="col-sm">
+    <img class="img1" src="{{url_for('static', filename=dice_list[4])}}" width="100" height="100"/>
+    </div>
+
+  </div>
+
+  <div class="row">
+
+    <div class="col-sm">
+      <input class="btn btn-primary" type="button" value="Keep #1">
+    </div>
+
+    <div class="col-sm">
+      <input class="btn btn-primary" type="button" value="Keep #2">
+    </div>
+
+    <div class="col-sm">
+      <input class="btn btn-primary" type="button" value="Keep #3">
+    </div>
+
+    <div class="col-sm">
+      <input class="btn btn-primary" type="button" value="Keep #4">
+    </div>
+
+    <div class="col-sm">
+      <input class="btn btn-primary" type="button" value="Keep #5">
+    </div>
+
+  </div>
+
+
+</div>
+
+<p></p>
+<p></p>
+
+<form>
+
+  <div class="form-group">
+    <label for="exampleFormControlSelect1">Example select</label>
+    <select class="form-control" id="exampleFormControlSelect1">
+      <option>1</option>
+      <option>2</option>
+      <option>3</option>
+      <option>4</option>
+      <option>5</option>
+    </select>
+  </div>
+
+</form>
+
+<p></p>
+<p></p>
+
+<form method="POST">
+
+<div class="form-check">
+  <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+  <label class="form-check-label" for="defaultCheck1">
+    Default checkbox
+  </label>
+</div>
+
+</form>
+<p></p>
+<p></p>
+
+<div class="container">
+  <div class="row">
+    <div class="text-center">
+      <div class="btn-group" role="group" aria-label="Basic example">
+        <button type="button" class="btn btn-secondary">Roll Dice</button>
+        <button type="button" class="btn btn-secondary">Keep Dice</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<a class="btn btn-danger" href="/exit_game">Exit Game</a>
+
+{% endblock %}

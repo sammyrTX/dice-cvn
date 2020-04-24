@@ -59,12 +59,39 @@
 
 <div class="container">
 
+<h4>Dice to Keep:  ***** TEST *****</h4>
+
+<form method="POST">
+
+  <div class="form-check">
+    {{ dice_hold_web_form.hidden_tag() }}
+    {{ dice_hold_web_form.die1.label }} {{ dice_hold_web_form.die1(class="form-check-input") }}
+
+    {{ dice_hold_web_form.roll_dice(class="btn btn-primary")}}
+    <!-- <input class="form-check-input" type="checkbox" value="" id="die1">
+    <label class="form-check-label" for="defaultCheck1">
+      --- ONE TEST ---
+    </label> -->
+
+  </div>
+</form>
+</div>
+
+
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+
+<div class="container">
+
 <h4>Dice to Keep:</h4>
 
 </div>
-
-<p></p>
-<p></p>
 
 <div class="container">
 
@@ -109,15 +136,6 @@
 
 </div>
 
-<div>
-  <form  method="POST">
-    {{ testform.hidden_tag() }}
-    {{ testform.dice_hold.label }} {{ testform.dice_hold(class="form-check-input") }}
-    {{ testform.enter }}
-
-  </form>
-
-</div>
 <p></p>
 
 <div class="container">
@@ -132,6 +150,14 @@
 
 <div class="container">
 <a class="btn btn-danger" href="/exit_game">Exit Game</a>
+</div>
+
+<div class="container">
+
+  <p>
+    scorepad.name : {{scorepad.name}}
+  </p>
+
 </div>
 
 {% endblock %}
