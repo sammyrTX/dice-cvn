@@ -30,6 +30,27 @@ def die_roll():
     return die_result
 
 
+def roll_five_dice():
+    """Roll five dice - use for initital roll or if player wants to re-roll
+    all the dice for roll two or roll three."""
+
+    five_dice = []
+    for _ in range(1, 6):
+        five_dice.append(die_roll())
+
+    return five_dice
+
+
+def dice_png_list(dice_list):
+    """Convert dice list values to the corresponding png image file"""
+    png_list = []
+
+    for _ in dice_list:
+        png_list.append(dice_png[_ - 1])
+
+    return png_list
+
+
 def show_dice(dice_list):
     for _ in enumerate(dice_list):
         print(f'die: {_[0] + 1} => {_[1]}')

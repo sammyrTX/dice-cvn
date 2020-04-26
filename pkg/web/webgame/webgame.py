@@ -4,17 +4,23 @@ from flask import (Blueprint,
                    render_template,
                    redirect,
                    url_for,
+                   request,
                    )
 
 from ... scorekeeping.scorepad import Scorepad_
 
 from ... diceroll.dice import (die_roll,
                                dice_png,
+                               roll_five_dice,
+                               dice_png_list,
                                )
 
 from .. forms import (DiceHold,
                       DiceHoldWeb,
+                      RollTwo,
                       )
+
+from .. config import scorepad_global
 
 webgame_bp = Blueprint('webgame_bp',
                        __name__,
@@ -27,28 +33,33 @@ webgame_bp = Blueprint('webgame_bp',
 @webgame_bp.route('/', methods=['GET', 'POST'])
 def web_start_game():
 
-    # *** Resume here to manage game play for players turn***
-    # coninue working on rendering HTML after first roll and then gather
-    # player selections for dice to hold
-    # Also need to store dice values kept and add to new rolls
-
     """Web main function to initiate game."""
 
-    # Instantiate scorepad_ object
-    scorepad = Scorepad_('Player01')
+    if request.method == 'GET':
 
-    # Roll five dice for first turn
-    for _ in range(1, 6):
-        scorepad.web_dice_list.append(dice_png[die_roll() - 1])
+        # # Instantiate scorepad_ object
+        # scorepad = Scorepad_('Player01')
 
-    scorepad.web_dice_list = sorted(scorepad.web_dice_list)
+        # Set local variable to global object for scorepad
+        scorepad = scorepad_global
 
-    print(f'scorepad.web_dice_list before submit: {scorepad.web_dice_list}')
+        # Roll five dice for first turn
+        scorepad.web_dice_list = roll_five_dice()
+        scorepad.web_dice_list = sorted(scorepad.web_dice_list)
 
+        png_list = dice_png_list(scorepad.web_dice_list)
+
+        print(f'******* ROLL ONE ROUTE **************')
+
+        print(f'scorepad.web_dice_list before submit: {scorepad.web_dice_list}')
+
+    scorepad = scorepad_global
     dice_hold_web_form = DiceHoldWeb()
+    png_list = dice_png_list(scorepad.web_dice_list)
 
-    scorepad.web_turn_tracking = 888
-    scorepad.track_fours = 21
+    print(f'png_list: {png_list}')
+
+    print(f'******* ROLL ONE ROUTE **************')
 
     if dice_hold_web_form.validate_on_submit():
 
@@ -58,43 +69,76 @@ def web_start_game():
         die4 = dice_hold_web_form.die4.data
         die5 = dice_hold_web_form.die5.data
 
+        dice_list = scorepad.web_dice_list
+        dice_list_hold = scorepad.web_dice_list_hold
+
+        print(f'die1: {die1}')
+        print(f'die2: {die2}')
+        print(f'die3: {die3}')
+        print(f'die4: {die4}')
+        print(f'die5: {die5}')
+
         dice_hold_web_form.die1.data = ''
         dice_hold_web_form.die2.data = ''
         dice_hold_web_form.die3.data = ''
         dice_hold_web_form.die4.data = ''
         dice_hold_web_form.die5.data = ''
 
-        scorepad.web_turn_tracking = 999
-        scorepad.track_fours = 32
+        dice_list_hold = []
+        dice_roll = []
 
-        print(f'scorepad.web_dice_list after submit: {scorepad.web_dice_list}')
-        dice_list = scorepad.web_dice_list
+        # Dice that are checked in form get added to dice_list_hold
+        if die1:
+            dice_list_hold.append(dice_list[0])
 
-        # dice_hold = testform.dice_hold.data
-        # testform.dice_hold.data = ''
+        if die2:
+            dice_list_hold.append(dice_list[1])
+
+        if die3:
+            dice_list_hold.append(dice_list[2])
+
+        if die4:
+            dice_list_hold.append(dice_list[3])
+
+        if die5:
+            dice_list_hold.append(dice_list[4])
+
+        print('*' * 45)
+        print(f'dice_list_hold_check: {dice_list_hold}')
+        print('*' * 45)
+
+        # Get quantity of dice to roll next
+        new_dice_qty = 5 - len(dice_list_hold)
+
+        # Add dice that were kept to the new set of dice
+        for keep_die in dice_list_hold:
+            dice_roll.append(int(keep_die))
+
+        # Roll dice that were not kept and add to the list and then sort
+        for roll2 in range(1, (new_dice_qty + 1)):
+            dice_roll.append(die_roll())
+
+        dice_roll = sorted(dice_roll)
+
+        print('*' * 45)
+        print(f'2nd dice_roll check: {dice_roll}')
+        print('*' * 45)
+
+        # Store second roll dice back into the global object
+        scorepad.web_dice_list = dice_roll
+
+        scorepad.web_turn_tracking = 1
 
         return redirect(url_for('webgame_bp.roll_two',
                                 die1=die1,
-                                scorepad=scorepad,
-                                web_turn_tracking=scorepad.web_turn_tracking,
-                                dice_list=dice_list,
                                 ))
-        # return render_template('roll_two.html',
-        #                        die1=die1,
-        #                        scorepad=scorepad,
-        #                        web_turn_tracking=scorepad.web_turn_tracking,
-        #                        dice_list=dice_list,
-        #                        )
 
     return render_template('webgame/roll_one.html',
                            scorepad=scorepad,
+                           png_list=png_list,
                            dice_hold_web_form=dice_hold_web_form,
                            track_fours=scorepad.track_fours,
                            )
-
-
-
-
 
 # Sample Blueprint code
 
@@ -112,40 +156,32 @@ def web_start_game():
 #     product = Product.query.get(product_id)
 #     return render_template('products/view.html', product=product)
 
-
-
-# @webgame_bp.route('/roll_one/<scorepad>/<dice_list>/<turn_track>')
-# def roll_one(scorepad, dice_list, turn_track):
-#     """First roll of a turn. Roll all five dice"""
-
-#     print('******** roll one route ************')
-#     print(f'scorepad.dice_list: {scorepad.dice_list}')
-#     # turn_track = scorepad.web_turn_tracking
-#     scorepad.web_turn_tracking = 99
-
-#     return render_template('roll_one.html',
-#                            scorepad=scorepad,
-#                            dice_list=dice_list,
-#                            turn_track=scorepad.web_turn_tracking,
-#                            )
-
-
-@webgame_bp.route('/roll_two/<scorepad>/<die1>/<web_turn_tracking>')
-def roll_two(scorepad, die1, web_turn_tracking):
+@webgame_bp.route('/roll_two/<die1>')
+def roll_two(die1):
     """Second roll of a turn. Roll up to five dice"""
+
+    # Set local variable to global object for scorepad
+    scorepad = scorepad_global
+    web_turn_tracking = scorepad.web_turn_tracking
+
     print(f'******* ROLL TWO ROUTE **************')
-    print(f'die1: {die1}')
     print(f'scorepad: {scorepad}')
-    print(f'web_turn_tracking: {web_turn_tracking}')
+    print(f'scorepad.web_turn_tracking: {scorepad.web_turn_tracking}')
+    print(f'scorepad.web_dice_list: {scorepad.web_dice_list}')
+    print(f'******* ROLL TWO ROUTE **************')
 
-    # dice_list = ['images/dice3.png', 'images/dice3.png', 'images/dice2.png', 'images/dice3.png', 'images/dice3.png']
+    dice_list = scorepad.web_dice_list
+    png_list = dice_png_list(scorepad.web_dice_list)
+    print(f'png_list: {png_list}')
 
-    return render_template('roll_two.html',
+    print(f'******* ROLL TWO ROUTE **************')
+
+    return render_template('webgame/roll_two.html',
                            scorepad=scorepad,
                            dice_list=dice_list,
+                           png_list=png_list,
                            die1=die1,
                            web_turn_tracking=web_turn_tracking,
-                           # turn_track=scorepad.web_turn_tracking,
                            )
 
 
