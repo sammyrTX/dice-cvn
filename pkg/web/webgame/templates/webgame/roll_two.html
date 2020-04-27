@@ -10,6 +10,8 @@
     <!-- <p class="lead">This is a modified jumbotron that occupies the entire horizontal space of its parent.</p> -->
   </div>
 
+  <br>
+
   <div class="container">
 
     <div class="row">
@@ -54,7 +56,42 @@
   </div>
 </div>
 
+<br>
 
+<div class="container">
+
+<h4>Dice to Keep:</h4>
+
+<form method="POST">
+
+  <div class="form-check-inline">
+    {{ dice_hold_web_form.hidden_tag() }}
+     {{ dice_hold_web_form.die1(class="form-check-input") }}     {{ dice_hold_web_form.die1.label }}
+     {{ dice_hold_web_form.die2(class="form-check-input") }}     {{ dice_hold_web_form.die2.label }}
+     {{ dice_hold_web_form.die3(class="form-check-input") }}     {{ dice_hold_web_form.die3.label }}
+     {{ dice_hold_web_form.die4(class="form-check-input") }}     {{ dice_hold_web_form.die4.label }}
+     {{ dice_hold_web_form.die5(class="form-check-input") }}     {{ dice_hold_web_form.die5.label }}
+
+  </div>
+  <br><br>
+  <div>
+    {{ dice_hold_web_form.roll_dice(class="btn btn-primary")}}
+  </div>
+
+</form>
+
+</div>
+<br>
+<div class="container">
+
+      <a class="btn btn-primary" href="/not_a_url">Keep All Dice - Placeholder</a>
+
+</div>
+
+<br><br>
+
+<div class="container">
 <a class="btn btn-danger" href="/exit_game">Exit Game</a>
+</div>
 
 {% endblock %}

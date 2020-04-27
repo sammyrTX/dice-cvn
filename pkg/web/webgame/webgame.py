@@ -109,6 +109,7 @@ def web_start_game():
 
         # Get quantity of dice to roll next
         new_dice_qty = 5 - len(dice_list_hold)
+        print(f'new_dice_qty: {new_dice_qty}  <<<<<<<<<<<<<<<')
 
         # Add dice that were kept to the new set of dice
         for keep_die in dice_list_hold:
@@ -140,47 +141,118 @@ def web_start_game():
                            track_fours=scorepad.track_fours,
                            )
 
-# Sample Blueprint code
 
-# products_bp = Blueprint('products_bp', __name__,
-#     template_folder='templates',
-#     static_folder='static', static_url_path='assets')
-
-# @products_bp.route('/')
-# def list():
-#     products = Product.query.all()
-#     return render_template('products/list.html', products=products)
-
-# @products_bp.route('/view/<int:product_id>')
-# def view(product_id):
-#     product = Product.query.get(product_id)
-#     return render_template('products/view.html', product=product)
-
-@webgame_bp.route('/roll_two/<die1>')
-def roll_two(die1):
+@webgame_bp.route('/roll_two')
+def roll_two():
     """Second roll of a turn. Roll up to five dice"""
 
-    # Set local variable to global object for scorepad
     scorepad = scorepad_global
-    web_turn_tracking = scorepad.web_turn_tracking
 
-    print(f'******* ROLL TWO ROUTE **************')
-    print(f'scorepad: {scorepad}')
-    print(f'scorepad.web_turn_tracking: {scorepad.web_turn_tracking}')
+    print(f'request method: {request.method}')
     print(f'scorepad.web_dice_list: {scorepad.web_dice_list}')
-    print(f'******* ROLL TWO ROUTE **************')
 
-    dice_list = scorepad.web_dice_list
+
+    if request.method == 'GET':
+        # Set local variable to global object for scorepad
+        scorepad = scorepad_global
+        web_turn_tracking = scorepad.web_turn_tracking
+
+        print(f'******* ROLL TWO ROUTE **************')
+        print(f'scorepad: {scorepad}')
+        print(f'scorepad.web_turn_tracking: {scorepad.web_turn_tracking}')
+        print(f'scorepad.web_dice_list: {scorepad.web_dice_list}')
+        print(f'******* ROLL TWO ROUTE **************')
+
+        dice_list = scorepad.web_dice_list
+        png_list = dice_png_list(scorepad.web_dice_list)
+        print(f'png_list: {png_list}')
+
+        print(f'******* ROLL TWO ROUTE **************')
+
+        print(f'scorepad.web_dice_list before submit: {scorepad.web_dice_list}')
+
+    dice_hold_web_form = DiceHoldWeb()
     png_list = dice_png_list(scorepad.web_dice_list)
+
     print(f'png_list: {png_list}')
 
     print(f'******* ROLL TWO ROUTE **************')
+
+    if dice_hold_web_form.validate_on_submit():
+
+        dice_list = scorepad.web_dice_list
+
+        die1 = dice_hold_web_form.die1.data
+        die2 = dice_hold_web_form.die2.data
+        die3 = dice_hold_web_form.die3.data
+        die4 = dice_hold_web_form.die4.data
+        die5 = dice_hold_web_form.die5.data
+
+        print(f'die1: {die1}')
+        print(f'die2: {die2}')
+        print(f'die3: {die3}')
+        print(f'die4: {die4}')
+        print(f'die5: {die5}')
+
+        dice_hold_web_form.die1.data = ''
+        dice_hold_web_form.die2.data = ''
+        dice_hold_web_form.die3.data = ''
+        dice_hold_web_form.die4.data = ''
+        dice_hold_web_form.die5.data = ''
+
+        dice_list_hold = []
+        dice_roll = []
+
+        # Dice that are checked in form get added to dice_list_hold
+        if die1:
+            dice_list_hold.append(dice_list[0])
+
+        if die2:
+            dice_list_hold.append(dice_list[1])
+
+        if die3:
+            dice_list_hold.append(dice_list[2])
+
+        if die4:
+            dice_list_hold.append(dice_list[3])
+
+        if die5:
+            dice_list_hold.append(dice_list[4])
+
+        print('*' * 45)
+        print(f'dice_list_hold_check: {dice_list_hold}')
+        print('*' * 45)
+
+        # Get quantity of dice to roll next
+        new_dice_qty = 5 - len(dice_list_hold)
+
+        # Add dice that were kept to the new set of dice
+        for keep_die in dice_list_hold:
+            dice_roll.append(int(keep_die))
+
+        # Roll dice that were not kept and add to the list and then sort
+        for roll3 in range(1, (new_dice_qty + 1)):
+            dice_roll.append(die_roll())
+
+        dice_roll = sorted(dice_roll)
+
+        print('*' * 45)
+        print(f'3rd dice_roll check: {dice_roll}')
+        print('*' * 45)
+
+        # Store third roll dice back into the global object
+        scorepad.web_dice_list = dice_roll
+
+        scorepad.web_turn_tracking = 2
+
+        return redirect(url_for('webgame_bp.roll_three',
+                                ))
 
     return render_template('webgame/roll_two.html',
                            scorepad=scorepad,
                            dice_list=dice_list,
                            png_list=png_list,
-                           die1=die1,
+                           dice_hold_web_form=dice_hold_web_form,
                            web_turn_tracking=web_turn_tracking,
                            )
 

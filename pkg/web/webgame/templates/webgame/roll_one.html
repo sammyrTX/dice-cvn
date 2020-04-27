@@ -9,7 +9,7 @@
     <h2 class="display-4">First Roll - webgame blueprint</h2>
     <!-- <p class="lead">This is a modified jumbotron that occupies the entire horizontal space of its parent.</p> -->
   </div>
-
+<br>
   <div class="container">
 
     <div class="row">
@@ -54,12 +54,11 @@
   </div>
 </div>
 
-<p></p>
-<p></p>
+<br>
 
 <div class="container">
 
-<h4>Dice to Keep:  ***** TEST *****</h4>
+<h4>Dice to Keep:</h4>
 
 <form method="POST">
 
@@ -70,14 +69,8 @@
      {{ dice_hold_web_form.die3(class="form-check-input") }}     {{ dice_hold_web_form.die3.label }}
      {{ dice_hold_web_form.die4(class="form-check-input") }}     {{ dice_hold_web_form.die4.label }}
      {{ dice_hold_web_form.die5(class="form-check-input") }}     {{ dice_hold_web_form.die5.label }}
-
-    <!-- <input class="form-check-input" type="checkbox" value="" id="die1">
-    <label class="form-check-label" for="defaultCheck1">
-      --- ONE TEST ---
-    </label> -->
-
   </div>
-
+  <br><br>
   <div>
     {{ dice_hold_web_form.roll_dice(class="btn btn-primary")}}
   </div>
@@ -85,105 +78,20 @@
 </form>
 </div>
 
+<br>
+
 <div class="container">
 
       <a class="btn btn-primary" href="/not_a_url">Keep All Dice - Placeholder</a>
 
 </div>
 
-
-<p></p>
-<p></p>
-<p></p>
-<p></p>
-<p></p>
-<p></p>
-<p></p>
-<p></p>
-
-<div class="container">
-
-<h4>Dice to Keep:</h4>
-
-</div>
-
-<div class="container">
-
-<div class="row">
-<div class="form-check">
-  <input class="form-check-input" type="checkbox" value="1" id="die-1">
-  <label class="form-check-label" for="defaultCheck1">
-    --- ONE ---
-  </label>
-
-  </div>
-
-  <div class="form-check">
-    <input class="form-check-input" type="checkbox" value="2" id="die-2">
-    <label class="form-check-label" for="defaultCheck1">
-      --- TWO ---
-    </label>
-  </div>
-
-  <div class="form-check">
-    <input class="form-check-input" type="checkbox" value="3" id="die-3">
-    <label class="form-check-label" for="defaultCheck1">
-      --- THREE ---
-    </label>
-  </div>
-
-  <div class="form-check">
-    <input class="form-check-input" type="checkbox" value="4" id="die-4">
-    <label class="form-check-label" for="defaultCheck1">
-      --- FOUR ---
-    </label>
-  </div>
-
-  <div class="form-check">
-    <input class="form-check-input" type="checkbox" value="5" id="die-5">
-    <label class="form-check-label" for="defaultCheck1">
-      --- FIVE ---
-    </label>
-  </div>
-
-</div>
-
-</div>
-
-<p></p>
-
-<div class="container">
-
-      <button class="btn btn-primary" type="submit">Roll Dice</button>
-
-      <a class="btn btn-primary" href="/exit_game">Keep All Dice</a>
-
-</div>
-
-<p></p>
+<br>
+<br>
 
 <div class="container">
 <a class="btn btn-danger" href="/exit_game">Exit Game</a>
 </div>
 
-<div class="container">
-
-  <p>
-    scorepad.name : {{scorepad.name}}
-  </p>
-
-  <p>
-    scorepad.web_turn_tracking : {{scorepad.web_turn_tracking}}
-  </p>
-
-  <p>
-    scorepad.track_fours : {{scorepad.track_fours}}
-  </p>
-
-  <p>
-    track_fours : {{ track_fours }}
-  </p>
-
-</div>
 
 {% endblock %}
