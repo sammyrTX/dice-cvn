@@ -4,6 +4,7 @@ from wtforms import (IntegerField,
                      SubmitField,
                      BooleanField,
                      SelectField,
+                     TextField,
                      )
 
 from wtforms.fields.html5 import DateField
@@ -25,7 +26,6 @@ class DiceHoldWeb(FlaskForm):
     roll_dice = SubmitField('Roll Dice')
 
 
-class RollTwo(FlaskForm):
-    die2 = SelectField(u'Die No. 2', choices=[('die2', '-- 2 --'),
-                                              ('die3', '-- 3 --')])
-    roll_dice = SubmitField('Roll Dice 2')
+class CategorySelect(FlaskForm):
+    category_selection = TextField('Category')
+    select = SubmitField('Select')

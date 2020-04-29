@@ -16,11 +16,164 @@
 
 </div>
 
+<br><br>
+
+<div class="container">
+  <table class="table">
+  <thead>
+    <tr>
+      <th scope="col-md">Upper Section</th>
+      <th scope="col-md">Score</th>
+
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th scope="row">Ones</th>
+      <td>{{ scorepad.upper_ones }}</td>
+    </tr>
+    <tr>
+      <th scope="row">Twos</th>
+      <td>{{ scorepad.upper_twos }}</td>
+    </tr>
+    <tr>
+      <th scope="row">Threes</th>
+      <td>{{ scorepad.upper_threes }}</td>
+    </tr>
+    <tr>
+      <th scope="row">Fours</th>
+      <td>{{ scorepad.upper_fours }}</td>
+    </tr>
+    <tr>
+      <th scope="row">Fives</th>
+      <td>{{ scorepad.upper_fives }}</td>
+    </tr>
+    <tr>
+      <th scope="row">Sixes</th>
+      <td>{{ scorepad.upper_sixes }}</td>
+    </tr>
+    <tr>
+      <th scope="row">TOTAL SCORE</th>
+      <td>{{ scorepad.upper_section_total() }}</td>
+    </tr>
+    <tr>
+      <th scope="row">BONUS (if total is 63 or more)</th>
+      <td>{{ scorepad.upper_section_bonus_calc() }}</td>
+    </tr>
+    <tr>
+      <th scope="row">UPPER TOTAL</th>
+      <td>{{ scorepad.upper_section_total_and_bonus() }}</td>
+    </tr>
+  </tbody>
+</table>
+</div>
 
 <br><br>
 
 <div class="container">
+  <table class="table">
+  <thead>
+    <tr>
+      <th scope="col-md">Lower Section</th>
+      <th scope="col-md">Score</th>
+
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th scope="row">Three of a Kind</th>
+      <td>{{ scorepad.lower_kind_three_of }}</td>
+    </tr>
+    <tr>
+      <th scope="row">Four of a Kind</th>
+      <td>{{ scorepad.lower_kind_four_of }}</td>
+    </tr>
+    <tr>
+      <th scope="row">Full House</th>
+      <td>{{ scorepad.lower_full_house }}</td>
+    </tr>
+    <tr>
+      <th scope="row">Small Straight</th>
+      <td>{{ scorepad.lower_straight_small }}</td>
+    </tr>
+    <tr>
+      <th scope="row">Large Straight</th>
+      <td>{{ scorepad.lower_straight_large }}</td>
+    </tr>
+    <tr>
+      <th scope="row">Five of a Kind</th>
+      <td>{{ scorepad.lower_kind_five_of }}</td>
+    </tr>
+    <tr>
+      <th scope="row">Total Any Dice</th>
+      <td>{{ scorepad.lower_all_dice }}</td>
+    </tr>
+    <tr>
+      <th scope="row">BONUS - Count</th>
+      <td>{{ scorepad.lower_bonus_count }}</td>
+    </tr>
+    <tr>
+      <th scope="row">BONUS - Score</th>
+      <td>{{ scorepad.lower_bonus }}</td>
+    </tr>
+    <tr>
+      <th scope="row">LOWER TOTAL</th>
+      <td>{{ scorepad.upper_section_total_and_bonus() }}</td>
+    </tr>
+    <tr>
+      <th scope="row">UPPER TOTAL</th>
+      <td>{{ scorepad.lower_section_total() }}</td>
+    </tr>
+  </tbody>
+</table>
+
+<br><br>
+<div class="container">
+  <h2>Grand Total: {{ scorepad.grand_total() }}</h2>
+</div>
+
+
+
+<div class="dropdown">
+  <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    Dropdown button
+  </button>
+  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+    {% for _ in menu_list %}
+    <a class="dropdown-item" href="update_scorepad/{{ _[0] }}">{{ _[1] }}</a>
+    {% endfor %}
+  </div>
+</div>
+
+
+
+
+<div class="dropdown">
+
+  {{ category_select_form.hidden_tag() }}
+  {{ category_select_form.category_selection(class="btn btn-secondary dropdown-toggle") }}  {{ category_select_form.category_selection.label }}
+  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+    <a class="dropdown-item" href="/exit_game">Action</a>
+    <a class="dropdown-item" href="#">Another action</a>
+    <a class="dropdown-item" href="#">Something else here</a>
+  </div>
+
+</div>
+
+<br><br>
+<div class=container>
+  {{ category_select_form.select(class="btn btn-primary")}}
+</div>
+
+<br><br>
+<div class="container">
 <a class="btn btn-danger" href="/exit_game">Exit Game</a>
 </div>
+
+{% for _ in menu_list %}
+
+  <h5>{{ _ }}</h5>
+
+{% endfor %}
 
 {% endblock %}

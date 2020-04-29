@@ -59,6 +59,8 @@ def scorepad_available_scores(scorepad):
 def menu_categories(scorepad):
     """Based on scorepad tracking of items that have not been scored,
     build and display only categories that have not already been assigned.
+
+    Note: This function is for the command line version of dice-cvn.
     """
 
     # available_choices = []

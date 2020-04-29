@@ -120,6 +120,7 @@ class Scorepad_:
                 'H',  # Five of a Kind Bonus
                 ]
 
+
 def total_all_dice(dice_list):
     return sum(dice_list)
 
@@ -146,7 +147,6 @@ def lower_section_scoring(score_category, dice_list):
 if __name__ == '__main__':
     ###############################################################################
     # Object Testing
-
 
     player1 = Scorepad_('Johnny')
 

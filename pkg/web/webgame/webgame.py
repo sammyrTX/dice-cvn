@@ -7,6 +7,10 @@ from flask import (Blueprint,
                    request,
                    )
 
+from ... gameprocessing.menu import (scorepad_available_scores,
+                                     menu_items,
+                                     )
+
 from ... scorekeeping.scorepad import Scorepad_
 
 from ... diceroll.dice import (die_roll,
@@ -15,9 +19,8 @@ from ... diceroll.dice import (die_roll,
                                dice_png_list,
                                )
 
-from .. forms import (DiceHold,
-                      DiceHoldWeb,
-                      RollTwo,
+from .. forms import (DiceHoldWeb,
+                      CategorySelect,
                       )
 
 from .. config import scorepad_global
@@ -156,7 +159,7 @@ def web_start_game():
                            web_turn_label=web_turn_label,
                            )
 
-
+# Need to work out the route from the selection HTML
 @webgame_bp.route('/score_display_and_select')
 def score_display_and_select():
     """Display current score. Prompt for score category selection."""
@@ -164,19 +167,51 @@ def score_display_and_select():
     dice_list = sorted(scorepad.web_dice_list)
     png_list = dice_png_list(scorepad.web_dice_list)
 
+    menu_list_build = []
+    menu_list = []
+    score_status = dict
+
+    score_status = scorepad_available_scores(scorepad)
+
+    for _ in score_status['AVAILABLE']:
+        menu_list_build.append(menu_items[_])
+
+    # Append bonus counter since it does not have track prefix
+    menu_list_build.append([14, 'H - Five of a Kind Bonus'])
+
+    # Strip character key used in command line version of dice-cvn
+    menu_list_build = sorted(menu_list_build)
+    for _ in menu_list_build:
+        menu_list.append([_[1][0], _[1][4:len(_[1]) + 1]])
+        # menu_list.append(_[1][4:len(_[1]) + 1])
+
+    category_select_form = CategorySelect()
+
+    # *** TEST VALUES ***
+    scorepad.upper_fours = 16
+    scorepad.upper_sixes = 36
+    scorepad.upper_twos = 60
+    scorepad.lower_full_house = 555
+
     return render_template('webgame/score_display_and_select.html',
                            scorepad=scorepad,
                            dice_list=dice_list,
                            png_list=png_list,
+                           category_select_form=category_select_form,
+                           menu_list=menu_list,
                            )
 
 
-@webgame_bp.route('/score_display_updated')
-def score_display_updated():
-    """Display updated score. Proceed to roll one when ready if score
-    categories are available. If all categories have been assigned, end
-    game."""
-    pass
+@webgame_bp.route('/update_scorepad/<selection>')
+def update_scorepad(selection):
+    print(f'***** update_scorepad route *****')
+    print(f'Selection key:  {selection}')
+
+    return redirect(url_for('webgame_bp.update_scorepadx',
+                            selection=selection,
+                            ))
+
+
 ########################################################################
     # *** Build template to replace CLI code below
 
