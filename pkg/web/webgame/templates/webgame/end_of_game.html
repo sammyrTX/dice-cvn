@@ -6,55 +6,14 @@
 
 <div class="jumbotron jumbotron-fluid">
   <div class="container">
-    <h4 class="display-4">Make category selection</h4>
     <!-- <p class="lead">This is a modified jumbotron that occupies the entire horizontal space of its parent.</p> -->
   </div>
-
 <br>
 
-<div class="container">
-
-  <div class="row">
-    <div class="col-sm">
-    <p class="font-weight-bolder"> --- ONE ---</p>
-    </div>
-    <div class="col-sm">
-    <p class="font-weight-bolder">--- TWO ---</p>
-    </div>
-    <div class="col-sm">
-    <p class="font-weight-bolder">--- THREE ---</p>
-    </div>
-    <div class="col-sm">
-    <p class="font-weight-bolder">--- FOUR ---</p>
-    </div>
-    <div class="col-sm">
-    <p class="font-weight-bolder">--- FIVE ---</p>
-    </div>
+<div class="jumbotron jumbotron-fluid">
+  <div class="container">
+    <h2 class="display-4">Thanks for playing!</h2>
   </div>
-
-  <div class="row">
-
-    <div class="col-sm">
-    <img class="img1" src="{{url_for('static', filename=png_list[0])}}" width="100" height="100"/>
-    </div>
-
-    <div class="col-sm">
-    <img class="img1" src="{{url_for('static', filename=png_list[1])}}" width="100" height="100"/>
-    </div>
-
-    <div class="col-sm">
-    <img class="img1" src="{{url_for('static', filename=png_list[2])}}" width="100" height="100"/>
-    </div>
-
-    <div class="col-sm">
-    <img class="img1" src="{{url_for('static', filename=png_list[3])}}" width="100" height="100"/>
-    </div>
-
-    <div class="col-sm">
-    <img class="img1" src="{{url_for('static', filename=png_list[4])}}" width="100" height="100"/>
-    </div>
-</div>
-</div>
 
 <br>
 
@@ -108,7 +67,7 @@
 </table>
 </div>
 
-<br>
+<br><br>
 
 <div class="container">
   <table class="table">
@@ -166,28 +125,25 @@
     </tr>
   </tbody>
 </table>
-<div class="container">
-  <h3>Grand Total: {{ scorepad.grand_total() }}</h3>
-</div>
-
-<br><br>
 
 <div class="container">
-<div class="dropdown">
-  <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-    Dropdown button
-  </button>
-  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-    {% for _ in menu_list %}
-    <a class="dropdown-item" href="update_scorepad/{{ _[0] }}">{{ _[1] }}</a>
-    {% endfor %}
-  </div>
-</div>
+  <h2>Grand Total: {{ scorepad.grand_total() }}</h2>
 </div>
 
-<br><br>
+<br>
+<br>
+
+<div class="container">
+<a class="btn btn-primary" href="/webgame/next_turn">Next Roll</a>
+</div>
+
+
+<br>
+<br>
+
 <div class="container">
 <a class="btn btn-danger" href="/exit_game">Exit Game</a>
 </div>
+
 
 {% endblock %}

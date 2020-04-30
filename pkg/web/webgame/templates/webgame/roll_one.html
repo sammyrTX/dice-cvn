@@ -6,7 +6,7 @@
 
 <div class="jumbotron jumbotron-fluid">
   <div class="container">
-    <h2 class="display-4">{{ web_turn_label }} Roll - webgame blueprint</h2>
+    <h2 class="display-4">{{ web_turn_label }} Roll:</h2>
     <!-- <p class="lead">This is a modified jumbotron that occupies the entire horizontal space of its parent.</p> -->
   </div>
 <br>
@@ -56,38 +56,52 @@
 
 <br>
 
-<div class="container">
+{% if web_turn_label in ['First', 'Second'] %}
 
-<h4>Dice to Keep:</h4>
+  <div class="container">
 
-<form method="POST">
+  <h4>Dice to Keep:</h4>
 
-  <div class="form-check-inline">
-    {{ dice_hold_web_form.hidden_tag() }}
-     {{ dice_hold_web_form.die1(class="form-check-input") }}     {{ dice_hold_web_form.die1.label }}
-     {{ dice_hold_web_form.die2(class="form-check-input") }}     {{ dice_hold_web_form.die2.label }}
-     {{ dice_hold_web_form.die3(class="form-check-input") }}     {{ dice_hold_web_form.die3.label }}
-     {{ dice_hold_web_form.die4(class="form-check-input") }}     {{ dice_hold_web_form.die4.label }}
-     {{ dice_hold_web_form.die5(class="form-check-input") }}     {{ dice_hold_web_form.die5.label }}
+  <form method="POST">
+
+    <div class="form-check-inline">
+      {{ dice_hold_web_form.hidden_tag() }}
+       {{ dice_hold_web_form.die1(class="form-check-input") }}     {{ dice_hold_web_form.die1.label }}
+       {{ dice_hold_web_form.die2(class="form-check-input") }}     {{ dice_hold_web_form.die2.label }}
+       {{ dice_hold_web_form.die3(class="form-check-input") }}     {{ dice_hold_web_form.die3.label }}
+       {{ dice_hold_web_form.die4(class="form-check-input") }}     {{ dice_hold_web_form.die4.label }}
+       {{ dice_hold_web_form.die5(class="form-check-input") }}     {{ dice_hold_web_form.die5.label }}
+    </div>
+    <br><br>
+    <div>
+      {{ dice_hold_web_form.roll_dice(class="btn btn-primary")}}
+    </div>
+
+  </form>
   </div>
-  <br><br>
-  <div>
-    {{ dice_hold_web_form.roll_dice(class="btn btn-primary")}}
+
+  <br>
+
+  <div class="container">
+
+        <a class="btn btn-primary" href="/not_a_url">Keep All Dice - Placeholder</a>
+
   </div>
 
-</form>
-</div>
+  <br>
+  <br>
 
-<br>
+  {% else %}
 
-<div class="container">
+    <br>
+    <div class="container">
+          <a class="btn btn-success" href="score_display_and_select">Select Score Category</a>
+    </div>
 
-      <a class="btn btn-primary" href="/not_a_url">Keep All Dice - Placeholder</a>
+    <br><br>
 
-</div>
 
-<br>
-<br>
+{% endif %}
 
 <div class="container">
 <a class="btn btn-danger" href="/exit_game">Exit Game</a>

@@ -13,7 +13,7 @@ from . forms import (DiceHold,
 from .. diceroll.dice import (die_roll,
                               dice_png,
                               )
-from .. gameprocessing.web_player_turn import web_player_turn
+
 from .. gameprocessing.play_game import (start_game,
                                          game_status,
                                          )

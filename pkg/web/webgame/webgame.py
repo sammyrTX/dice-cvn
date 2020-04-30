@@ -11,6 +11,10 @@ from ... gameprocessing.menu import (scorepad_available_scores,
                                      menu_items,
                                      )
 
+from ... gameprocessing.scoring import process_category_selection
+
+from ... gameprocessing.play_game import game_status
+
 from ... scorekeeping.scorepad import Scorepad_
 
 from ... diceroll.dice import (die_roll,
@@ -62,7 +66,7 @@ def web_start_game():
             scorepad_local.web_dice_list = roll_five_dice()
             scorepad_local.web_dice_list = sorted(scorepad_local.web_dice_list)
 
-        print(f'******* {web_turn_label} ROLL ROUTE **************')
+        print(f'******* {web_turn_label} ROLL ROUTE 00 **************')
 
         print(f'scorepad.web_dice_list before submit: {scorepad_local.web_dice_list}')
 
@@ -73,7 +77,7 @@ def web_start_game():
 
     print(f'png_list: {png_list}')
 
-    print(f'******* {web_turn_label} ROLL ROUTE **************')
+    print(f'******* {web_turn_label} ROLL ROUTE 01 **************')
 
     if dice_hold_web_form.validate_on_submit():
 
@@ -150,6 +154,7 @@ def web_start_game():
 
             return redirect(url_for('webgame_bp.score_display_and_select',
                                     scorepad=scorepad,
+                                    png_list=png_list,
                                     ))
 
     return render_template('webgame/roll_one.html',
@@ -170,7 +175,6 @@ def score_display_and_select():
     menu_list_build = []
     menu_list = []
     score_status = dict
-
     score_status = scorepad_available_scores(scorepad)
 
     for _ in score_status['AVAILABLE']:
@@ -187,12 +191,6 @@ def score_display_and_select():
 
     category_select_form = CategorySelect()
 
-    # *** TEST VALUES ***
-    scorepad.upper_fours = 16
-    scorepad.upper_sixes = 36
-    scorepad.upper_twos = 60
-    scorepad.lower_full_house = 555
-
     return render_template('webgame/score_display_and_select.html',
                            scorepad=scorepad,
                            dice_list=dice_list,
@@ -204,13 +202,49 @@ def score_display_and_select():
 
 @webgame_bp.route('/update_scorepad/<selection>')
 def update_scorepad(selection):
-    print(f'***** update_scorepad route *****')
+    print(f'***** update_scorepad route 03 *****')
     print(f'Selection key:  {selection}')
 
-    return redirect(url_for('webgame_bp.update_scorepadx',
-                            selection=selection,
-                            ))
+    scorepad = scorepad_global
 
+    final_dice = scorepad.web_dice_list
+
+    scorepad = process_category_selection(final_dice,
+                                          selection,
+                                          scorepad,
+                                          )
+
+    return render_template('webgame/update_scorepad.html',
+                           selection=selection,
+                           scorepad=scorepad,
+                           )
+
+
+@webgame_bp.route('/next_turn')
+def next_turn():
+    """Check if player has updated all score categories. If not, reset
+    turn tracking and dice list and start next turn. Otherwise show
+    final score."""
+
+    scorepad = scorepad_global
+
+    if game_status(scorepad):
+        scorepad.web_turn_tracking = 0
+        scorepad.web_dice_list = []
+        return redirect(url_for('webgame_bp.web_start_game'))
+    else:
+        return redirect(url_for('webgame_bp.end_of_game'))
+
+
+@webgame_bp.route('/end_of_game')
+def end_of_game():
+    """End game with display of final score and button to start a new
+    game."""
+    scorepad = scorepad_global
+
+    return render_template('webgame/end_of_game.html',
+                           scorepad=scorepad,
+                           )
 
 ########################################################################
     # *** Build template to replace CLI code below
@@ -229,4 +263,4 @@ def update_scorepad(selection):
     # print()
 ########################################################################
 
-    return f'<h1>Return after completion of /web_start_game</h1>'
+
