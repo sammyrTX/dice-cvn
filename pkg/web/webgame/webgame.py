@@ -42,8 +42,8 @@ web_turn = ('First',
             'Third',
             )
 
-
-@webgame_bp.route('/', methods=['GET', 'POST'])
+# @webgame_bp.route('/', methods=['GET', 'POST'])
+@webgame_bp.route('/web_start_game', methods=['GET', 'POST'])
 def web_start_game():
 
     """Web main function to initiate game."""
@@ -176,6 +176,7 @@ def score_display_and_select():
     menu_list = []
     score_status = dict
     score_status = scorepad_available_scores(scorepad)
+    display_flag = 'SELECT'
 
     for _ in score_status['AVAILABLE']:
         menu_list_build.append(menu_items[_])
@@ -197,6 +198,7 @@ def score_display_and_select():
                            png_list=png_list,
                            category_select_form=category_select_form,
                            menu_list=menu_list,
+                           display_flag=display_flag,
                            )
 
 
@@ -208,16 +210,26 @@ def update_scorepad(selection):
     scorepad = scorepad_global
 
     final_dice = scorepad.web_dice_list
+    png_list = dice_png_list(final_dice)
 
     scorepad = process_category_selection(final_dice,
                                           selection,
                                           scorepad,
                                           )
 
-    return render_template('webgame/update_scorepad.html',
-                           selection=selection,
+    display_flag = 'UPDATED'
+
+    return render_template('webgame/score_display_and_select.html',
                            scorepad=scorepad,
+                           dice_list=final_dice,
+                           png_list=png_list,
+                           display_flag=display_flag,
                            )
+
+    # return render_template('webgame/update_scorepad.html',
+    #                        selection=selection,
+    #                        scorepad=scorepad,
+    #                        )
 
 
 @webgame_bp.route('/next_turn')
@@ -241,10 +253,22 @@ def end_of_game():
     """End game with display of final score and button to start a new
     game."""
     scorepad = scorepad_global
+    display_flag = 'END_OF_GAME'
 
-    return render_template('webgame/end_of_game.html',
+    return render_template('webgame/score_display_and_select.html',
                            scorepad=scorepad,
+                           display_flag=display_flag,
                            )
+
+
+@webgame_bp.route('/exit_game')
+def exit_game():
+    """Render template if player quits in middle of game."""
+
+    scorepad = scorepad_global
+    print(f'reset scorepad')
+    return render_template('webgame/exit_game.html')
+
 
 ########################################################################
     # *** Build template to replace CLI code below

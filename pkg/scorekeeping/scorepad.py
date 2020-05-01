@@ -51,7 +51,6 @@ class Scorepad_:
         self.track_straight_large = 0
         self.track_kind_five_of = 0
         self.track_all_dice = 0
-        self.bonus_counter = 0
         self.upper_section_total_show = self.upper_section_total()
         self.available_choices = self.initialize_choices_list()
         self.web_turn_tracking = 0

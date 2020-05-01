@@ -161,7 +161,7 @@ def test_bonus_first_pass():
                                             score_test,
                                             )
 
-    assert score_test.lower_bonus == 100 and score_test.bonus_counter == 1
+    assert score_test.lower_bonus == 100 and score_test.lower_bonus_count == 1
 
 
 def test_bonus_second_pass():
@@ -173,7 +173,7 @@ def test_bonus_second_pass():
     score_test.track_kind_five_of = 1
 
     # One bonus has already been scored
-    score_test.bonus_counter = 1
+    score_test.lower_bonus_count = 1
     score_test.lower_bonus = 100
 
     # Five of a kind dice
@@ -187,7 +187,7 @@ def test_bonus_second_pass():
                                             score_test,
                                             )
 
-    assert score_test.lower_bonus == 200 and score_test.bonus_counter == 2
+    assert score_test.lower_bonus == 200 and score_test.lower_bonus_count == 2
 
 
 def test_bonus_first_fail():
@@ -209,7 +209,7 @@ def test_bonus_first_fail():
                                             score_test,
                                             )
 
-    assert score_test.lower_bonus == 0 and score_test.bonus_counter == 0
+    assert score_test.lower_bonus == 0 and score_test.lower_bonus_count == 0
 
 
 def test_bonus_second_fail():
@@ -221,7 +221,7 @@ def test_bonus_second_fail():
     score_test.track_kind_five_of = 1
 
     # One bonus has already been scored
-    score_test.bonus_counter = 1
+    score_test.lower_bonus_count = 1
     score_test.lower_bonus = 100
 
     # Invalid Five of a kind dice
@@ -235,4 +235,4 @@ def test_bonus_second_fail():
                                             score_test,
                                             )
 
-    assert score_test.lower_bonus == 100 and score_test.bonus_counter == 1
+    assert score_test.lower_bonus == 100 and score_test.lower_bonus_count == 1
