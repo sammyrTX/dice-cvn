@@ -176,6 +176,7 @@ def score_display_and_select():
     menu_list = []
     score_status = dict
     score_status = scorepad_available_scores(scorepad)
+
     display_flag = 'SELECT'
 
     for _ in score_status['AVAILABLE']:
@@ -188,7 +189,6 @@ def score_display_and_select():
     menu_list_build = sorted(menu_list_build)
     for _ in menu_list_build:
         menu_list.append([_[1][0], _[1][4:len(_[1]) + 1]])
-        # menu_list.append(_[1][4:len(_[1]) + 1])
 
     category_select_form = CategorySelect()
 
@@ -216,20 +216,23 @@ def update_scorepad(selection):
                                           selection,
                                           scorepad,
                                           )
-
     display_flag = 'UPDATED'
 
-    return render_template('webgame/score_display_and_select.html',
-                           scorepad=scorepad,
-                           dice_list=final_dice,
-                           png_list=png_list,
-                           display_flag=display_flag,
-                           )
+    # Check if category selection is the last one. If true, go directly to
+    # end of game route
 
-    # return render_template('webgame/update_scorepad.html',
-    #                        selection=selection,
-    #                        scorepad=scorepad,
-    #                        )
+    score_status = dict
+    score_status = scorepad_available_scores(scorepad)
+
+    if len(score_status['AVAILABLE']) == 0:
+        return redirect(url_for('webgame_bp.end_of_game'))
+    else:
+        return render_template('webgame/score_display_and_select.html',
+                               scorepad=scorepad,
+                               dice_list=final_dice,
+                               png_list=png_list,
+                               display_flag=display_flag,
+                               )
 
 
 @webgame_bp.route('/next_turn')

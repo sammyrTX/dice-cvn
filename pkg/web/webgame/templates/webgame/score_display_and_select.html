@@ -81,46 +81,46 @@
 
 <div class="container">
   <div class="row">
-    <div class="col-sm">
-      Ones:
+    <div class="col-1">
+      {{ scorepad.zeroed_ones }}Ones:
     </div>
-    <div class="col-sm">
+    <div class="col-1 text-right">
       {{ scorepad.upper_ones }}
     </div>
-    <div class="col-sm">
-      Fours:
+    <div class="col-1">
+      {{ scorepad.zeroed_fours }}Fours:
     </div>
-    <div class="col-sm">
+    <div class="col-1 text-right">
       {{ scorepad.upper_fours }}
     </div>
   </div>
 
   <div class="row">
-    <div class="col-sm">
-      Twos:
+    <div class="col-1">
+      {{ scorepad.zeroed_twos }}Twos:
     </div>
-    <div class="col-sm">
+    <div class="col-1 text-right">
       {{ scorepad.upper_twos }}
     </div>
-    <div class="col-sm">
-      Fives:
+    <div class="col-1">
+      {{ scorepad.zeroed_fives }}Fives:
     </div>
-    <div class="col-sm">
+    <div class="col-1 text-right">
       {{ scorepad.upper_fives }}
     </div>
   </div>
 
   <div class="row">
-    <div class="col-sm">
-      Threes:
+    <div class="col-1">
+      {{ scorepad.zeroed_threes }}Threes:
     </div>
-    <div class="col-sm">
+    <div class="col-1 text-right">
       {{ scorepad.upper_threes }}
     </div>
-    <div class="col-sm">
-      Sixes:
+    <div class="col-1">
+      {{ scorepad.zeroed_sixes }}Sixes:
     </div>
-    <div class="col-sm">
+    <div class="col-1 text-right">
       {{ scorepad.upper_sixes }}
     </div>
   </div>
@@ -132,7 +132,7 @@
     <div class="col-sm">
       TOTAL
     </div>
-    <div class="col-sm">
+    <div class="col-1 text-right">
       {{ scorepad.upper_section_total() }}
     </div>
     <div class="col-sm">
@@ -149,7 +149,7 @@
     <div class="col-sm">
       BONUS (if total is 63 or more)
     </div>
-    <div class="col-sm">
+    <div class="col-1 text-right">
       {{ scorepad.upper_section_bonus_calc() }}
     </div>
     <div class="col-sm">
@@ -166,7 +166,7 @@
     <div class="col-sm">
       UPPER SECTION TOTAL
     </div>
-    <div class="col-sm">
+    <div class="col-1 text-right">
       {{ scorepad.upper_section_total_and_bonus() }}
     </div>
     <div class="col-sm">
@@ -192,61 +192,76 @@
 
 <div class="container">
   <div class="row">
-    <div class="col-sm">
-      Three of a Kind:
+    <div class="col-2">
+      {{ scorepad.zeroed_kind_three_of }}Three of a Kind:
     </div>
-    <div class="col-sm">
+    <div class="col-1 text-right">
       {{ scorepad.lower_kind_three_of }}
     </div>
-    <div class="col-sm">
-      Small Straight:
+    <div class="col-2">
+      {{ scorepad.zeroed_straight_small }}Small Straight:
     </div>
-    <div class="col-sm">
+    <div class="col-1 text-right">
       {{ scorepad.lower_straight_small }}
     </div>
   </div>
 
   <div class="row">
-    <div class="col-sm">
-      Four of a Kind:
+    <div class="col-2">
+      {{ scorepad.zeroed_kind_four_of }}Four of a Kind:
     </div>
-    <div class="col-sm">
+    <div class="col-1 text-right">
       {{ scorepad.lower_kind_four_of }}
     </div>
-    <div class="col-sm">
-      Large Straight:
+    <div class="col-2">
+      {{ scorepad.zeroed_straight_large }}Large Straight:
     </div>
-    <div class="col-sm">
+    <div class="col-1 text-right">
       {{ scorepad.lower_straight_large }}
     </div>
   </div>
 
   <div class="row">
-    <div class="col-sm">
-      Full House:
+    <div class="col-2">
+      {{ scorepad.zeroed_full_house }}Full House:
     </div>
-    <div class="col-sm">
+    <div class="col-1 text-right">
       {{ scorepad.lower_full_house }}
     </div>
-    <div class="col-sm">
+    <div class="col-2">
       Total all dice:
     </div>
-    <div class="col-sm">
+    <div class="col-1 text-right">
       {{ scorepad.lower_all_dice }}
     </div>
   </div>
 
   <div class="row">
-    <div class="col-sm">
-      Five of a Kind:
+    <div class="col-2">
+      {{ scorepad.zeroed_kind_five_of }}Five of a Kind:
     </div>
-    <div class="col-sm">
+    <div class="col-1 text-right">
       {{ scorepad.lower_kind_five_of }}
     </div>
-    <div class="col-sm">
-      Five of a Kind Bonus Count:
+    <div class="col-2">
+    <!--  -->
     </div>
-    <div class="col-sm">
+    <div class="col-1">
+    <!--  -->
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-2">
+      Five of a Kind Bonus:
+    </div>
+    <div class="col-1 text-right">
+      {{ scorepad.lower_bonus }}
+    </div>
+    <div class="col-2">
+      Bonus Count:
+    </div>
+    <div class="col-1 text-right">
       {{ scorepad.lower_bonus_count }}
     </div>
   </div>
@@ -258,7 +273,7 @@
     <div class="col-sm">
       LOWER SECTION TOTAL
     </div>
-    <div class="col-sm">
+    <div class="col-1 text-right">
       {{ scorepad.lower_section_total() }}
     </div>
     <div class="col-sm">
@@ -275,7 +290,7 @@
     <div class="col-sm">
       UPPER SECTION TOTAL
     </div>
-    <div class="col-sm">
+    <div class="col-1 text-right">
       {{ scorepad.upper_section_total_and_bonus() }}
     </div>
     <div class="col-sm">
@@ -294,7 +309,7 @@
     <div class="col-sm">
       GRAND TOTAL
     </div>
-    <div class="col-sm">
+    <div class="col-1 text-right">
       {{ scorepad.grand_total() }}
     </div>
     <div class="col-sm">
@@ -306,6 +321,11 @@
 </div>
 </div>
 <!----------------------------------------------------------------------------->
+<br>
+<div class="container">
+  <h5>* Score has been zeroed</h5>
+
+</div>
 <br>
 
 {% if display_flag == 'SELECT' %}

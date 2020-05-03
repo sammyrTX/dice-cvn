@@ -156,26 +156,38 @@ def process_category_selection(final_dice,
         if selection == '1' and scorepad.track_ones == 0:
             scorepad.upper_ones += upper_score
             scorepad.track_ones = 1
+            if upper_score == 0:
+                scorepad.zeroed_ones = '*'
 
         elif selection == '2' and scorepad.track_twos == 0:
             scorepad.upper_twos += upper_score
             scorepad.track_twos = 1
+            if upper_score == 0:
+                scorepad.zeroed_twos = '*'
 
         elif selection == '3' and scorepad.track_threes == 0:
             scorepad.upper_threes += upper_score
             scorepad.track_threes = 1
+            if upper_score == 0:
+                scorepad.zeroed_threes = '*'
 
         elif selection == '4' and scorepad.track_fours == 0:
             scorepad.upper_fours += upper_score
             scorepad.track_fours = 1
+            if upper_score == 0:
+                scorepad.zeroed_fours = '*'
 
         elif selection == '5' and scorepad.track_fives == 0:
             scorepad.upper_fives += upper_score
             scorepad.track_fives = 1
+            if upper_score == 0:
+                scorepad.zeroed_fives = '*'
 
         elif selection == '6' and scorepad.track_sixes == 0:
             scorepad.upper_sixes += upper_score
             scorepad.track_sixes = 1
+            if upper_score == 0:
+                scorepad.zeroed_sixes = '*'
         else:
             print('*** ERROR - INVALID UPPER SECTION SELECTION ***')
 
@@ -186,6 +198,8 @@ def process_category_selection(final_dice,
                                                               scorepad,
                                                               )
         scorepad.track_kind_three_of = 1
+        if scorepad.lower_kind_three_of == 0:
+            scorepad.zeroed_kind_three_of = '*'
 
     # Four of a Kind
     if selection == 'B' and scorepad.track_kind_four_of == 0:
@@ -194,6 +208,8 @@ def process_category_selection(final_dice,
                                                              scorepad,
                                                              )
         scorepad.track_kind_four_of = 1
+        if scorepad.lower_kind_four_of == 0:
+            scorepad.zeroed_kind_four_of = '*'
 
     # Full House
     if selection == 'C' and scorepad.track_full_house == 0:
@@ -201,6 +217,8 @@ def process_category_selection(final_dice,
                                                      scorepad,
                                                      )
         scorepad.track_full_house = 1
+        if scorepad.lower_full_house == 0:
+            scorepad.zeroed_full_house = '*'
 
     # Small Straight
     if selection == 'D' and scorepad.track_straight_small == 0:
@@ -208,6 +226,8 @@ def process_category_selection(final_dice,
                                                              scorepad,
                                                              )
         scorepad.track_straight_small = 1
+        if scorepad.lower_straight_small == 0:
+            scorepad.zeroed_straight_small = '*'
 
     # Large Straight
     if selection == 'E' and scorepad.track_straight_large == 0:
@@ -215,6 +235,8 @@ def process_category_selection(final_dice,
                                                              scorepad,
                                                              )
         scorepad.track_straight_large = 1
+        if scorepad.lower_straight_large == 0:
+            scorepad.zeroed_straight_large = '*'
 
     # Five of a Kind
     if selection == 'F' and scorepad.track_kind_five_of == 0:
@@ -223,6 +245,8 @@ def process_category_selection(final_dice,
                                                              scorepad,
                                                              )
         scorepad.track_kind_five_of = 1
+        if scorepad.lower_kind_five_of == 0:
+            scorepad.zeroed_kind_five_of = '*'
 
     # Total all dice
     if selection == 'G' and scorepad.track_all_dice == 0:
@@ -230,6 +254,8 @@ def process_category_selection(final_dice,
                                                scorepad,
                                                )
         scorepad.track_all_dice = 1
+        if scorepad.lower_all_dice == 0:
+            scorepad.zeroed_all_dice = '*'
 
     # Bonus for additional Five of a Kind
     if selection == 'H':
