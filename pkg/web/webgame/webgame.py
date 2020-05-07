@@ -164,7 +164,7 @@ def web_start_game():
                            web_turn_label=web_turn_label,
                            )
 
-# Need to work out the route from the selection HTML
+
 @webgame_bp.route('/score_display_and_select')
 def score_display_and_select():
     """Display current score. Prompt for score category selection."""
@@ -182,8 +182,10 @@ def score_display_and_select():
     for _ in score_status['AVAILABLE']:
         menu_list_build.append(menu_items[_])
 
-    # Append bonus counter since it does not have track prefix
-    menu_list_build.append([14, 'H - Five of a Kind Bonus'])
+    # If Five of a Kind bonus has been scored and the score is not
+    # zero, append bonus counter since it does not have track prefix
+    if scorepad.track_kind_five_of == 1 and scorepad.lower_kind_five_of != 0:
+      menu_list_build.append([14, 'H - Five of a Kind Bonus'])
 
     # Strip character key used in command line version of dice-cvn
     menu_list_build = sorted(menu_list_build)
