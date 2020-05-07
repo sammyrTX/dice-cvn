@@ -34,7 +34,7 @@ menu_items = {'track_ones': [1, '1 - Ones'],
               'track_straight_small': [10, 'D - Small Straight'],
               'track_straight_large': [11, 'E - Large Straight'],
               'track_kind_five_of': [12, 'F - Five of a Kind'],
-              'track_all_dice': [13, 'G - Any Dice'],
+              'track_all_dice': [13, 'G - Total All Dice'],
               'bonus_counter': [14, 'H - Five of a Kind Bonus'],
               }
 
