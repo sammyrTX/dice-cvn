@@ -11,7 +11,10 @@ from ... gameprocessing.menu import (scorepad_available_scores,
                                      menu_items,
                                      )
 
-from ... gameprocessing.scoring import process_category_selection
+from ... gameprocessing.scoring import (process_category_selection,
+                                        score_number_of_a_kind,
+                                        fixed_scores,
+                                        )
 
 from ... gameprocessing.play_game import game_status
 
@@ -185,7 +188,12 @@ def score_display_and_select():
     # If Five of a Kind bonus has been scored and the score is not
     # zero, append bonus counter since it does not have track prefix
     if scorepad.track_kind_five_of == 1 and scorepad.lower_kind_five_of != 0:
-      menu_list_build.append([14, 'H - Five of a Kind Bonus'])
+        # Only add bonus choice if dice being scored is a five of a kind
+        if score_number_of_a_kind(dice_list,
+                                  5,
+                                  scorepad,
+                                  ) == fixed_scores['score_kind_five_of']:
+            menu_list_build.append([14, 'H - Five of a Kind Bonus'])
 
     # Strip character key used in command line version of dice-cvn
     menu_list_build = sorted(menu_list_build)
