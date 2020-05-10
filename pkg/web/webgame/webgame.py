@@ -18,8 +18,6 @@ from ... gameprocessing.scoring import (process_category_selection,
 
 from ... gameprocessing.play_game import game_status
 
-from ... scorekeeping.scorepad import Scorepad_
-
 from ... diceroll.dice import (die_roll,
                                dice_png,
                                roll_five_dice,
@@ -39,6 +37,26 @@ webgame_bp = Blueprint('webgame_bp',
                        static_url_path='webgame',
                        )
 
+
+def initialize_scorepad():
+    """Reset scorepad attributes to initial values"""
+
+    scorepad_global.web_turn_tracking = 0
+    scorepad_global.web_dice_list = []
+    scorepad_global.web_dice_list_hold = []
+
+    for _ in dir(scorepad_global):
+        if _.startswith('upper') or _.startswith('lower') or _.startswith('track'):
+            # set to zero here
+            print(_, end='')# getattr(scorepad, _) = 0
+            scorepad_global._ = 0
+            print(f'>>> {_}: {scorepad_global._}')
+        if _.startswith('zeroed'):
+            print(f'>>> {_}: {scorepad_global._}')
+            scorepad_global._ = ' '
+
+    return f'scorepad_global initialized'
+
 # Web turn tracking label
 web_turn = ('First',
             'Second',
@@ -53,30 +71,30 @@ def web_start_game():
 
     if request.method == 'GET':
 
-        # Set local variable to global object for scorepad
-        scorepad_local = scorepad_global
-        print(f'scorepad_local: {scorepad_local}')
-        print(f'scorepad_local.web_turn_tracking: {scorepad_local.web_turn_tracking}')
+        # Use global object for scorepad
+
+        print(f'scorepad_global: {scorepad_global}')
+        print(f'scorepad_global.web_turn_tracking: {scorepad_global.web_turn_tracking}')
 
         try:
-            web_turn_label = web_turn[scorepad_local.web_turn_tracking]
+            web_turn_label = web_turn[scorepad_global.web_turn_tracking]
         except IndexError:
             print('Web turn Label Index out of range...')
 
-        if scorepad_local.web_turn_tracking == 0:
+        if scorepad_global.web_turn_tracking == 0:
 
             # Roll five dice for first turn
-            scorepad_local.web_dice_list = roll_five_dice()
-            scorepad_local.web_dice_list = sorted(scorepad_local.web_dice_list)
+            scorepad_global.web_dice_list = roll_five_dice()
+            scorepad_global.web_dice_list = sorted(scorepad_global.web_dice_list)
 
         print(f'******* {web_turn_label} ROLL ROUTE 00 **************')
 
-        print(f'scorepad.web_dice_list before submit: {scorepad_local.web_dice_list}')
+        print(f'scorepad.web_dice_list before submit: {scorepad_global.web_dice_list}')
 
-    scorepad = scorepad_global
-    web_turn_label = web_turn[scorepad.web_turn_tracking]
+    # scorepad = scorepad_global
+    web_turn_label = web_turn[scorepad_global.web_turn_tracking]
     dice_hold_web_form = DiceHoldWeb()
-    png_list = dice_png_list(scorepad.web_dice_list)
+    png_list = dice_png_list(scorepad_global.web_dice_list)
 
     print(f'png_list: {png_list}')
 
@@ -90,8 +108,8 @@ def web_start_game():
         die4 = dice_hold_web_form.die4.data
         die5 = dice_hold_web_form.die5.data
 
-        dice_list = scorepad.web_dice_list
-        dice_list_hold = scorepad.web_dice_list_hold
+        dice_list = scorepad_global.web_dice_list
+        dice_list_hold = scorepad_global.web_dice_list_hold
 
         print(f'die1: {die1}')
         print(f'die2: {die2}')
@@ -146,22 +164,22 @@ def web_start_game():
         print('*' * 45)
 
         # Store second roll dice back into the global object
-        scorepad.web_dice_list = dice_roll
+        scorepad_global.web_dice_list = dice_roll
 
-        scorepad.web_turn_tracking += 1
+        scorepad_global.web_turn_tracking += 1
 
-        if scorepad.web_turn_tracking <= 2:
+        if scorepad_global.web_turn_tracking <= 2:
             return redirect(url_for('webgame_bp.web_start_game',
                                     ))
         else:
 
             return redirect(url_for('webgame_bp.score_display_and_select',
-                                    scorepad=scorepad,
+                                    scorepad=scorepad_global,
                                     png_list=png_list,
                                     ))
 
     return render_template('webgame/roll_one.html',
-                           scorepad=scorepad,
+                           scorepad=scorepad_global,
                            png_list=png_list,
                            dice_hold_web_form=dice_hold_web_form,
                            web_turn_label=web_turn_label,
@@ -171,14 +189,14 @@ def web_start_game():
 @webgame_bp.route('/score_display_and_select')
 def score_display_and_select():
     """Display current score. Prompt for score category selection."""
-    scorepad = scorepad_global
-    dice_list = sorted(scorepad.web_dice_list)
-    png_list = dice_png_list(scorepad.web_dice_list)
+
+    dice_list = sorted(scorepad_global.web_dice_list)
+    png_list = dice_png_list(scorepad_global.web_dice_list)
 
     menu_list_build = []
     menu_list = []
     score_status = dict
-    score_status = scorepad_available_scores(scorepad)
+    score_status = scorepad_available_scores(scorepad_global)
 
     display_flag = 'SELECT'
 
@@ -187,11 +205,11 @@ def score_display_and_select():
 
     # If Five of a Kind bonus has been scored and the score is not
     # zero, append bonus counter since it does not have track prefix
-    if scorepad.track_kind_five_of == 1 and scorepad.lower_kind_five_of != 0:
+    if scorepad_global.track_kind_five_of == 1 and scorepad_global.lower_kind_five_of != 0:
         # Only add bonus choice if dice being scored is a five of a kind
         if score_number_of_a_kind(dice_list,
                                   5,
-                                  scorepad,
+                                  scorepad_global,
                                   ) == fixed_scores['score_kind_five_of']:
             menu_list_build.append([14, 'H - Five of a Kind Bonus'])
 
@@ -203,7 +221,7 @@ def score_display_and_select():
     category_select_form = CategorySelect()
 
     return render_template('webgame/score_display_and_select.html',
-                           scorepad=scorepad,
+                           scorepad=scorepad_global,
                            dice_list=dice_list,
                            png_list=png_list,
                            category_select_form=category_select_form,
@@ -217,14 +235,12 @@ def update_scorepad(selection):
     print(f'***** update_scorepad route 03 *****')
     print(f'Selection key:  {selection}')
 
-    scorepad = scorepad_global
-
-    final_dice = scorepad.web_dice_list
+    final_dice = scorepad_global.web_dice_list
     png_list = dice_png_list(final_dice)
 
     scorepad = process_category_selection(final_dice,
                                           selection,
-                                          scorepad,
+                                          scorepad_global,
                                           )
     display_flag = 'UPDATED'
 
@@ -232,13 +248,13 @@ def update_scorepad(selection):
     # end of game route
 
     score_status = dict
-    score_status = scorepad_available_scores(scorepad)
+    score_status = scorepad_available_scores(scorepad_global)
 
     if len(score_status['AVAILABLE']) == 0:
         return redirect(url_for('webgame_bp.end_of_game'))
     else:
         return render_template('webgame/score_display_and_select.html',
-                               scorepad=scorepad,
+                               scorepad=scorepad_global,
                                dice_list=final_dice,
                                png_list=png_list,
                                display_flag=display_flag,
@@ -251,11 +267,9 @@ def next_turn():
     turn tracking and dice list and start next turn. Otherwise show
     final score."""
 
-    scorepad = scorepad_global
-
-    if game_status(scorepad):
-        scorepad.web_turn_tracking = 0
-        scorepad.web_dice_list = []
+    if game_status(scorepad_global):
+        scorepad_global.web_turn_tracking = 0
+        scorepad_global.web_dice_list = []
         return redirect(url_for('webgame_bp.web_start_game'))
     else:
         return redirect(url_for('webgame_bp.end_of_game'))
@@ -265,11 +279,11 @@ def next_turn():
 def end_of_game():
     """End game with display of final score and button to start a new
     game."""
-    scorepad = scorepad_global
+
     display_flag = 'END_OF_GAME'
 
     return render_template('webgame/score_display_and_select.html',
-                           scorepad=scorepad,
+                           scorepad=scorepad_global,
                            display_flag=display_flag,
                            )
 
@@ -278,9 +292,20 @@ def end_of_game():
 def exit_game():
     """Render template if player quits in middle of game."""
 
-    scorepad = scorepad_global
-    print(f'reset scorepad')
     return render_template('webgame/exit_game.html')
+
+# **** Need to resume initialization work
+@webgame_bp.route('/start_new_game')
+def start_new_game():
+    """reset scorepad"""
+
+    initialize_scorepad()
+
+    for _ in dir(scorepad_global):
+        if _.startswith('upper') or _.startswith('lower') or _.startswith('track'):
+            print(f'{_} >>> {getattr(scorepad_global, _)}')
+
+    return redirect(url_for('webgame_bp.web_start_game',))
 
 
 ########################################################################
