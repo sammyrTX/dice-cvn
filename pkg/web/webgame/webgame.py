@@ -44,18 +44,25 @@ def initialize_scorepad():
     scorepad_global.web_turn_tracking = 0
     scorepad_global.web_dice_list = []
     scorepad_global.web_dice_list_hold = []
+    attribute_exclude = ['upper_section_total',
+                         'upper_section_total_show',
+                         'upper_section_total_and_bonus',
+                         'upper_section_bonus_calc',
+                         'lower_section_total',
+                         ]
 
     for _ in dir(scorepad_global):
-        if _.startswith('upper') or _.startswith('lower') or _.startswith('track'):
-            # set to zero here
-            print(_, end='')# getattr(scorepad, _) = 0
-            scorepad_global._ = 0
-            print(f'>>> {_}: {scorepad_global._}')
+        if _ not in attribute_exclude:
+            if _.startswith('upper') or _.startswith('lower') or _.startswith('track'):
+                # set to zero
+                # print(f'BEFORE INIT ^^^ {_}: {getattr(scorepad_global, _)}')
+                print(_, end='')
+                setattr(scorepad_global, _, 0)  # How to set an attribute
+                # print(f'>>> {_}: {getattr(scorepad_global, _)}')
+                # set to space here
         if _.startswith('zeroed'):
-            print(f'>>> {_}: {scorepad_global._}')
-            scorepad_global._ = ' '
-
-    return f'scorepad_global initialized'
+            setattr(scorepad_global, _, ' ')
+    print(f'****** INIT COMPLETE *******')
 
 # Web turn tracking label
 web_turn = ('First',
@@ -294,17 +301,14 @@ def exit_game():
 
     return render_template('webgame/exit_game.html')
 
-# **** Need to resume initialization work
+
 @webgame_bp.route('/start_new_game')
 def start_new_game():
     """reset scorepad"""
 
     initialize_scorepad()
 
-    for _ in dir(scorepad_global):
-        if _.startswith('upper') or _.startswith('lower') or _.startswith('track'):
-            print(f'{_} >>> {getattr(scorepad_global, _)}')
-
+    print(f'*** start_new_game function end ***')
     return redirect(url_for('webgame_bp.web_start_game',))
 
 
