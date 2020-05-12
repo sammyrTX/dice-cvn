@@ -70,7 +70,7 @@ web_turn = ('First',
             'Third',
             )
 
-# @webgame_bp.route('/', methods=['GET', 'POST'])
+
 @webgame_bp.route('/web_start_game', methods=['GET', 'POST'])
 def web_start_game():
 
@@ -302,6 +302,7 @@ def exit_game():
     return render_template('webgame/exit_game.html')
 
 
+@webgame_bp.route('/', methods=['GET', 'POST'])
 @webgame_bp.route('/start_new_game')
 def start_new_game():
     """reset scorepad"""

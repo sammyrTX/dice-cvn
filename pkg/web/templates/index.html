@@ -1,17 +1,14 @@
+<!-- /web/templates/index.html -->
 {% extends "base.html" %}
 
 {% block content %}
 
 <div class="jumbotron">
-  <h1 class="display-4">dice-cvn</h1>
-  <p class="lead">Dice game that utilizes Python for the back end and Flask for the web framework</p>
-  <p class="lead">Click the button below to begin.</p></p>
+  <p class="lead">Welcome to the dice game that utilizes Python for the back end and Flask for the web framework</p>
   <hr class="my-4">
-  <a class="btn btn-primary btn-lg" href="/game_display" role="button">Start Game</a>
+  <a class="btn btn-primary btn-lg" href="/webgame" role="button">Start Game</a>
 
 </div>
-
-<p>------------------------------------------------------------</p>
 
 <div class="container">
   <div class="row">
@@ -41,9 +38,5 @@
     </div>
   </div>
 </div>
-
-<p>------------------------------------------------------------</p>
-
-<h3>bottom of html page</h3>
 
 {% endblock %}
