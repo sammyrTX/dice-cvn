@@ -12,21 +12,44 @@
 <br>
   <div class="container">
 
+    <form method="POST">
+
+    <!-- button placeholder -->
+
     <div class="row">
-      <div class="col-sm">
-      <p class="font-weight-bolder"> --- ONE ---</p>
+      <div class="form-check col-sm">
+        <input class="form-check-input" type="checkbox" value="1" id="die01" name="die01x">
+        <label class="form-check-label font-weight-bolder" for="die01">
+         --- ONE ---
+        </label>
       </div>
-      <div class="col-sm">
-      <p class="font-weight-bolder">--- TWO ---</p>
+
+      <div class="form-check col-sm">
+        <input class="form-check-input" type="checkbox" value="2" id="die02" name="die02x">
+        <label class="form-check-label font-weight-bolder" for="die02">
+        --- TWO ---
+        </label>
       </div>
-      <div class="col-sm">
-      <p class="font-weight-bolder">--- THREE ---</p>
+
+      <div class="form-check col-sm">
+        <input class="form-check-input" type="checkbox" value="3" id="die03" name="die03x">
+        <label class="form-check-label font-weight-bolder" for="die03">
+        --- THREE ---
+        </label>
       </div>
-      <div class="col-sm">
-      <p class="font-weight-bolder">--- FOUR ---</p>
+
+      <div class="form-check col-sm">
+        <input class="form-check-input" type="checkbox" value="4" id="die04" name="die04x">
+        <label class="form-check-label font-weight-bolder" for="die04">
+        --- FOUR ---
+        </label>
       </div>
-      <div class="col-sm">
-      <p class="font-weight-bolder">--- FIVE ---</p>
+
+      <div class="form-check col-sm">
+        <input class="form-check-input" type="checkbox" value="5" id="die05" name="die05x">
+        <label class="form-check-label font-weight-bolder" for="die05">
+        --- FIVE ---
+        </label>
       </div>
     </div>
 
@@ -52,61 +75,43 @@
       <img class="img1" src="{{url_for('static', filename=png_list[4])}}" width="100" height="100"/>
       </div>
   </div>
-</div>
+
+      <br>
+
+      <div class="row">
+
+      {% if web_turn_label in ['First', 'Second'] %}
+
+          <button class="btn btn-primary" type="submit">Roll Dice</button>
+          <p>&nbsp</p>
+          <a class="btn btn-success" href="score_display_and_select">Keep All Dice and Select Score</a>
+
+          <p>&nbsp</p>
+          <a class="btn btn-danger" href="exit_game">Exit Game</a>
+
+      {% endif %}
+      
+      </div>
+
+    </form>
 
 <br>
 
-{% if web_turn_label in ['First', 'Second'] %}
+</div>
+
+{% if web_turn_label in ['Third'] %}
 
   <div class="container">
-
-  <h4>Dice to Keep:</h4>
-
-  <form method="POST">
-
-    <div class="form-check-inline">
-      {{ dice_hold_web_form.hidden_tag() }}
-       {{ dice_hold_web_form.die1(class="form-check-input") }}     {{ dice_hold_web_form.die1.label }}
-       {{ dice_hold_web_form.die2(class="form-check-input") }}     {{ dice_hold_web_form.die2.label }}
-       {{ dice_hold_web_form.die3(class="form-check-input") }}     {{ dice_hold_web_form.die3.label }}
-       {{ dice_hold_web_form.die4(class="form-check-input") }}     {{ dice_hold_web_form.die4.label }}
-       {{ dice_hold_web_form.die5(class="form-check-input") }}     {{ dice_hold_web_form.die5.label }}
+    <div class="row">
+        <a class="btn btn-success" href="score_display_and_select">Select Score Category</a>
+        <p>&nbsp</p>
+        <a class="btn btn-danger" href="exit_game">Exit Game</a>
     </div>
-    <br><br>
-    <div>
-      {{ dice_hold_web_form.roll_dice(class="btn btn-primary")}}
-    </div>
-
-  </form>
   </div>
 
   <br>
-
-  <div class="container">
-
-        <a class="btn btn-success" href="score_display_and_select">Keep All Dice and Select Score</a>
-
-  </div>
-
-  <br>
-  <br>
-
-  {% else %}
-
-    <br>
-    <div class="container">
-          <a class="btn btn-success" href="score_display_and_select">Select Score Category</a>
-    </div>
-
-    <br>
-
 
 {% endif %}
-
-<div class="container">
-<a class="btn btn-danger" href="exit_game">Exit Game</a>
-</div>
-<br>
 
 <!----------------------------------------------------------------------------->
 <!-- Score Display by Category -->

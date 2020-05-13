@@ -55,12 +55,11 @@ def initialize_scorepad():
         if _ not in attribute_exclude:
             if _.startswith('upper') or _.startswith('lower') or _.startswith('track'):
                 # set to zero
-                # print(f'BEFORE INIT ^^^ {_}: {getattr(scorepad_global, _)}')
                 print(_, end='')
                 setattr(scorepad_global, _, 0)  # How to set an attribute
-                # print(f'>>> {_}: {getattr(scorepad_global, _)}')
-                # set to space here
+
         if _.startswith('zeroed'):
+            # set to space here
             setattr(scorepad_global, _, ' ')
     print(f'****** INIT COMPLETE *******')
 
@@ -100,54 +99,34 @@ def web_start_game():
 
     # scorepad = scorepad_global
     web_turn_label = web_turn[scorepad_global.web_turn_tracking]
-    dice_hold_web_form = DiceHoldWeb()
+    # dice_hold_web_form = DiceHoldWeb()  # Not in use, but keep for now
     png_list = dice_png_list(scorepad_global.web_dice_list)
 
     print(f'png_list: {png_list}')
 
     print(f'******* {web_turn_label} ROLL ROUTE 01 **************')
 
-    if dice_hold_web_form.validate_on_submit():
+    if request.method == 'POST':
 
-        die1 = dice_hold_web_form.die1.data
-        die2 = dice_hold_web_form.die2.data
-        die3 = dice_hold_web_form.die3.data
-        die4 = dice_hold_web_form.die4.data
-        die5 = dice_hold_web_form.die5.data
+        print(f'^^^^^^ POST ^^^^^^^')
+
+        # Grab selected dice to keep from request form
+        keep_dice = request.form
+
+        print(f'keep_dice: {keep_dice}')
+
+        for _ in keep_dice:
+            print(f'{_} >>> {keep_dice[_]}')
 
         dice_list = scorepad_global.web_dice_list
         dice_list_hold = scorepad_global.web_dice_list_hold
-
-        print(f'die1: {die1}')
-        print(f'die2: {die2}')
-        print(f'die3: {die3}')
-        print(f'die4: {die4}')
-        print(f'die5: {die5}')
-
-        dice_hold_web_form.die1.data = ''
-        dice_hold_web_form.die2.data = ''
-        dice_hold_web_form.die3.data = ''
-        dice_hold_web_form.die4.data = ''
-        dice_hold_web_form.die5.data = ''
 
         dice_list_hold = []
         dice_roll = []
 
         # Dice that are checked in form get added to dice_list_hold
-        if die1:
-            dice_list_hold.append(dice_list[0])
-
-        if die2:
-            dice_list_hold.append(dice_list[1])
-
-        if die3:
-            dice_list_hold.append(dice_list[2])
-
-        if die4:
-            dice_list_hold.append(dice_list[3])
-
-        if die5:
-            dice_list_hold.append(dice_list[4])
+        for _ in keep_dice:
+            dice_list_hold.append(dice_list[int(keep_dice[_]) - 1])
 
         print('*' * 45)
         print(f'dice_list_hold_check: {dice_list_hold}')
@@ -188,7 +167,7 @@ def web_start_game():
     return render_template('webgame/roll_one.html',
                            scorepad=scorepad_global,
                            png_list=png_list,
-                           dice_hold_web_form=dice_hold_web_form,
+                           # dice_hold_web_form=dice_hold_web_form,
                            web_turn_label=web_turn_label,
                            )
 
