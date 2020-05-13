@@ -1,0 +1,336 @@
+{% extends "base.html" %}
+
+{% block title %}dice-cvn{% endblock %}
+
+{% block content %}
+
+<div class="jumbotron jumbotron-fluid">
+  <div class="container">
+
+    {% if display_flag == 'SELECT' %}
+    <h4 class="display-4">Make category selection</h4>
+    {% elif display_flag == 'UPDATED' %}
+    <h4 class="display-4">Updated score</h4>
+    {% elif display_flag == 'END_OF_GAME' %}
+    <h4 class="display-4">Thanks for playing! Your final score is {{ scorepad.grand_total() }}.</h4>
+    {% else %}
+    <h4 class="display-4">*** Score Updated ERROR ***</h4>
+    {% endif %}
+    <!-- <p class="lead">This is a modified jumbotron that occupies the entire horizontal space of its parent.</p> -->
+  </div>
+
+</div>
+<br>
+
+<div class="container">
+
+{% if display_flag == 'SELECT' or display_flag == 'UPDATED' %}
+  <div class="row">
+    <div class="col-sm">
+    <p class="font-weight-bolder"> --- ONE ---</p>
+    </div>
+    <div class="col-sm">
+    <p class="font-weight-bolder">--- TWO ---</p>
+    </div>
+    <div class="col-sm">
+    <p class="font-weight-bolder">--- THREE ---</p>
+    </div>
+    <div class="col-sm">
+    <p class="font-weight-bolder">--- FOUR ---</p>
+    </div>
+    <div class="col-sm">
+    <p class="font-weight-bolder">--- FIVE ---</p>
+    </div>
+  </div>
+
+  <div class="row">
+
+    <div class="col-sm">
+    <img class="img1" src="{{url_for('static', filename=png_list[0])}}" width="100" height="100"/>
+    </div>
+
+    <div class="col-sm">
+    <img class="img1" src="{{url_for('static', filename=png_list[1])}}" width="100" height="100"/>
+    </div>
+
+    <div class="col-sm">
+    <img class="img1" src="{{url_for('static', filename=png_list[2])}}" width="100" height="100"/>
+    </div>
+
+    <div class="col-sm">
+    <img class="img1" src="{{url_for('static', filename=png_list[3])}}" width="100" height="100"/>
+    </div>
+
+    <div class="col-sm">
+    <img class="img1" src="{{url_for('static', filename=png_list[4])}}" width="100" height="100"/>
+    </div>
+</div>
+</div>
+
+<br>
+
+{% endif %}
+
+<!----------------------------------------------------------------------------->
+<!-- Score Display -->
+<div class="container">
+  <div class="row">
+    <div class="col-2 font-weight-bold font-italic" style="border:1px solid black;">
+      UPPER SECTION
+    </div>
+</div>
+</div>
+<br>
+<div class="container" style="border:1px solid black;padding-top: 20px;">  <!-- style="border:1px solid #cecece" -->
+  <div class="row">
+    <div class="col-1 text-right">
+
+      <p class="font-weight-bold">{{ scorepad.zeroed_ones }}Ones:</p>
+    </div>
+    <div class="col-1 text-left">
+      <p class="font-weight-bolder">{{ scorepad.upper_ones }}</p>
+    </div>
+
+    <div class="col-1 text-right">
+      <p class="font-weight-bold">{{ scorepad.zeroed_twos }}Twos:</p>
+    </div>
+
+    <div class="col-1 text-left">
+      <p class="font-weight-bolder">{{ scorepad.upper_twos }}</p>
+    </div>
+
+    <div class="col-1 text-right">
+      <p class="font-weight-bold">{{ scorepad.zeroed_threes }}Threes:</p>
+    </div>
+    <div class="col-1 text-left">
+      <p class="font-weight-bolder">{{ scorepad.upper_threes }}</p>
+    </div>
+
+    <div class="col-1 text-right">
+      <p class="font-weight-bold">{{ scorepad.zeroed_fours }}Fours:</p>
+    </div>
+    <div class="col-1 text-left">
+      <p class="font-weight-bolder">{{ scorepad.upper_fours }}</p>
+    </div>
+
+    <div class="col-1 text-right">
+    <p class="font-weight-bold">{{ scorepad.zeroed_fives }}Fives:</p>
+    </div>
+
+    <div class="col-1 text-left">
+    <p class="font-weight-bolder">{{ scorepad.upper_fives }}</p>
+    </div>
+
+    <div class="col-1 text-right">
+    <p class="font-weight-bold">{{ scorepad.zeroed_sixes }}Sixes:</p>
+    </div>
+
+    <div class="col-1 text-left">
+    <p class="font-weight-bolder">{{ scorepad.upper_sixes }}</p>
+    </div>
+  </div>
+</div>
+
+<br>
+
+<div class="container" style="border:1px solid black;padding-top: 15px;padding-bottom: 15px;">
+    <div class="container">
+      <div class="row">
+        <div class="col-3 font-weight-bold">
+          TOTAL
+        </div>
+        <div class="col-1 text-right font-weight-bolder">
+          {{ scorepad.upper_section_total() }}
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="row">
+        <div class="col-3 font-weight-bold">
+          BONUS (35) if total is 63 or more
+        </div>
+        <div class="col-1 text-right font-weight-bolder">
+          {{ scorepad.upper_section_bonus_calc() }}
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="row">
+        <div class="col-3 font-weight-bold">
+          UPPER SECTION TOTAL
+        </div>
+        <div class="col-1 text-right font-weight-bolder">
+          {{ scorepad.upper_section_total_and_bonus() }}
+        </div>
+      </div>
+    </div>
+</div>
+<br>
+
+<!----------------------------------------------------------------------------->
+
+<div class="container">
+  <div class="row">
+    <div class="col-2 font-weight-bold font-italic" style="border:1px solid black;">
+      LOWER SECTION
+    </div>
+</div>
+</div>
+
+<br>
+<div class="container" style="border:1px solid black;padding-top: 20px;padding-bottom: 15px;">
+    <div class="row">
+      <div class="col-3 font-weight-bold text-right">
+        {{ scorepad.zeroed_kind_three_of }}Three of a Kind (total all dice):
+      </div>
+      <div class="col-1 font-weight-bolder text-right">
+        {{ scorepad.lower_kind_three_of }}
+      </div>
+      <div class="col-3 font-weight-bold text-right">
+        {{ scorepad.zeroed_kind_four_of }}Four of a Kind (total all dice):
+      </div>
+      <div class="col-1 font-weight-bolder text-right">
+        {{ scorepad.lower_kind_four_of }}
+      </div>
+      <div class="col-3 font-weight-bold text-right">
+        {{ scorepad.zeroed_full_house }}Full House (25):
+      </div>
+      <div class="col-1 font-weight-bolder text-right">
+        {{ scorepad.lower_full_house }}
+      </div>
+    </div>
+
+      <div class="row">
+        <div class="col-3 font-weight-bold text-right">
+          {{ scorepad.zeroed_straight_small }}Small Straight (30):
+        </div>
+        <div class="col-1 font-weight-bolder text-right">
+          {{ scorepad.lower_straight_small }}
+        </div>
+
+        <div class="col-3 font-weight-bold text-right">
+          {{ scorepad.zeroed_straight_large }}Large Straight (40):
+        </div>
+        <div class="col-1 font-weight-bolder text-right">
+          {{ scorepad.lower_straight_large }}
+        </div>
+        <div class="col-3 font-weight-bold text-right">
+          Total All Dice:
+        </div>
+        <div class="col-1 font-weight-bolder text-right">
+          {{ scorepad.lower_all_dice }}
+        </div>
+      </div>
+
+    <div class="row">
+      <div class="col-3 font-weight-bold text-right">
+        {{ scorepad.zeroed_kind_five_of }}Five of a Kind (50):
+      </div>
+      <div class="col-1 font-weight-bolder text-right">
+        {{ scorepad.lower_kind_five_of }}
+      </div>
+      <div class="col-3 font-weight-bold text-right">
+        Bonus (100):
+      </div>
+      <div class="col-1 font-weight-bolder text-right">
+        {{ scorepad.lower_bonus }}
+      </div>
+      <div class="col-3 font-weight-bold text-right">
+        Bonus Count:
+      </div>
+      <div class="col-1 font-weight-bolder text-right">
+        {{ scorepad.lower_bonus_count }}
+      </div>
+    </div>
+  </div>
+
+<br>
+
+<div class="container"  style="border:1px solid black;padding-top: 15px;padding-bottom: 15px;">
+
+    <div class="container">
+      <div class="row">
+        <div class="col-3 font-weight-bold">
+          LOWER SECTION TOTAL
+        </div>
+        <div class="col-1 text-right font-weight-bolder">
+          {{ scorepad.lower_section_total() }}
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="row">
+        <div class="col-3 font-weight-bold">
+          UPPER SECTION TOTAL
+        </div>
+        <div class="col-1 text-right font-weight-bolder">
+          {{ scorepad.upper_section_total_and_bonus() }}
+        </div>
+        <div class="col-sm">
+          <!-- placeholder -->
+        </div>
+        <div class="col-sm">
+                <!-- placeholder -->
+        </div>
+    </div>
+    </div>
+    <div class="container">
+      <div class="row">
+        <div class="col-3">
+          <p class="font-weight-bold font-italic">GRAND TOTAL:</p>
+        </div>
+        <div class="col-1 text-right font-weight-bolder font-italic">
+          {{ scorepad.grand_total() }}
+        </div>
+    </div>
+</div>
+
+</div>
+<!----------------------------------------------------------------------------->
+<br>
+<div class="container">
+  <h6>* Score has been zeroed</h6>
+</div>
+
+<!----------------------------------------------------------------------------->
+
+<br>
+
+{% if display_flag == 'SELECT' %}
+
+<div class="container">
+<div class="dropdown">
+  <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    Select Category to Score
+  </button>
+  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+    {% for _ in menu_list %}
+    <a class="dropdown-item" href="update_scorepad/{{ _[0] }}">{{ _[1] }}</a>
+    {% endfor %}
+  </div>
+</div>
+</div>
+
+{% elif display_flag == 'UPDATED' %}
+
+<div class="container">
+<a class="btn btn-primary" href="/webgame/next_turn">Next Turn</a>
+</div>
+
+{% elif display_flag == 'END_OF_GAME' %}
+
+{% else %}
+
+<h2>*** ERROR ***</h2>
+
+{% endif %}
+
+<br>
+<div class="container">
+<a class="btn btn-danger" href="/webgame/exit_game">Exit Game</a>
+</div>
+
+{% endblock %}

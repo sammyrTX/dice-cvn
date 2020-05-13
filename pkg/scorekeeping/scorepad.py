@@ -16,7 +16,48 @@ lower_section_categories_total_dice_score = ['lower_kind_three_of',
                                              'lower_all_dice',
                                              ]
 
+# *** TEST PURPOSES ONLY *** REMOVE AFTER TESTING
+# class Scorepad_:
+#     """Store player score for each category"""
+#     def __init__(self,
+#                  name,
+#                  ):
+#         self.name = name
+#         self.upper_ones = 0
+#         self.upper_twos = 0
+#         self.upper_threes = 0
+#         self.upper_fours = 99
+#         self.upper_fives = 9
+#         self.upper_sixes = 99
+#         self.lower_kind_three_of = 99
+#         self.lower_kind_four_of = 9
+#         self.lower_full_house = 0
+#         self.lower_straight_small = 99
+#         self.lower_straight_large = 99
+#         self.lower_kind_five_of = 0
+#         self.lower_all_dice = 0
+#         self.lower_bonus_count = 0
+#         self.lower_bonus = 0
+#         self.track_ones = 1
+#         self.track_twos = 1
+#         self.track_threes = 1
+#         self.track_fours = 1
+#         self.track_fives = 1
+#         self.track_sixes = 0
+#         self.track_kind_three_of = 1
+#         self.track_kind_four_of = 1
+#         self.track_full_house = 0
+#         self.track_straight_small = 1
+#         self.track_straight_large = 1
+#         self.track_kind_five_of = 1
+#         self.track_all_dice = 1
+#         self.upper_section_total_show = self.upper_section_total()
+#         self.available_choices = self.initialize_choices_list()
+#         self.web_turn_tracking = 0
+#         self.web_dice_list = []
+#         self.web_dice_list_hold = []
 
+# Original Scorepad_ - Restore after testing
 class Scorepad_:
     """Store player score for each category"""
     def __init__(self,
@@ -51,7 +92,19 @@ class Scorepad_:
         self.track_straight_large = 0
         self.track_kind_five_of = 0
         self.track_all_dice = 0
-        self.bonus_counter = 0
+        self.zeroed_ones = ' '
+        self.zeroed_twos = ' '
+        self.zeroed_threes = ' '
+        self.zeroed_fours = ' '
+        self.zeroed_fives = ' '
+        self.zeroed_sixes = ' '
+        self.zeroed_kind_three_of = ' '
+        self.zeroed_kind_four_of = ' '
+        self.zeroed_full_house = ' '
+        self.zeroed_straight_small = ' '
+        self.zeroed_straight_large = ' '
+        self.zeroed_kind_five_of = ' '
+        self.zeroed_all_dice = ' '
         self.upper_section_total_show = self.upper_section_total()
         self.available_choices = self.initialize_choices_list()
         self.web_turn_tracking = 0
@@ -120,6 +173,7 @@ class Scorepad_:
                 'H',  # Five of a Kind Bonus
                 ]
 
+
 def total_all_dice(dice_list):
     return sum(dice_list)
 
@@ -146,7 +200,6 @@ def lower_section_scoring(score_category, dice_list):
 if __name__ == '__main__':
     ###############################################################################
     # Object Testing
-
 
     player1 = Scorepad_('Johnny')
 
