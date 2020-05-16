@@ -3,21 +3,22 @@ from flask_wtf import FlaskForm
 from wtforms import (IntegerField,
                      SubmitField,
                      BooleanField,
-                     SelectField,
                      TextField,
                      )
 
-from wtforms.fields.html5 import DateField
+# from wtforms.fields.html5 import DateField
 
-from wtforms.validators import DataRequired, InputRequired
+from wtforms.validators import DataRequired
 
 
 class DiceHold(FlaskForm):
+    """Dice to be held. (Not in use)"""
     dice_hold = IntegerField('Dice_to_Hold', validators=[DataRequired()])
     enter = SubmitField('Enter')
 
 
 class DiceHoldWeb(FlaskForm):
+    """Track which dice are being kept"""
     die1 = BooleanField('--- One ---')
     die2 = BooleanField('--- Two ---')
     die3 = BooleanField('--- Three ---')
@@ -27,5 +28,6 @@ class DiceHoldWeb(FlaskForm):
 
 
 class CategorySelect(FlaskForm):
+    """Display available scoring categories"""
     category_selection = TextField('Category')
     select = SubmitField('Select')

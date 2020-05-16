@@ -19,14 +19,12 @@ from ... gameprocessing.scoring import (process_category_selection,
 from ... gameprocessing.play_game import game_status
 
 from ... diceroll.dice import (die_roll,
-                               dice_png,
                                roll_five_dice,
                                dice_png_list,
                                )
 
-from .. forms import (DiceHoldWeb,
-                      CategorySelect,
-                      )
+from .. forms import CategorySelect
+
 
 from .. config import scorepad_global
 
@@ -39,7 +37,7 @@ webgame_bp = Blueprint('webgame_bp',
 
 
 def initialize_scorepad():
-    """Reset scorepad attributes to initial values"""
+    """Reset scorepad object attributes to initial values"""
 
     scorepad_global.web_turn_tracking = 0
     scorepad_global.web_dice_list = []
@@ -61,9 +59,10 @@ def initialize_scorepad():
         if _.startswith('zeroed'):
             # set to space here
             setattr(scorepad_global, _, ' ')
-    print(f'****** INIT COMPLETE *******')
+    print(f'****** SCOREPAD INIT COMPLETE *******')
 
-# Web turn tracking label
+
+# Web player turn tracking label
 web_turn = ('First',
             'Second',
             'Third',
@@ -73,7 +72,7 @@ web_turn = ('First',
 @webgame_bp.route('/web_start_game', methods=['GET', 'POST'])
 def web_start_game():
 
-    """Web main function to initiate game."""
+    """Web app main function to initiate game."""
 
     if request.method == 'GET':
 
@@ -97,9 +96,7 @@ def web_start_game():
 
         print(f'scorepad.web_dice_list before submit: {scorepad_global.web_dice_list}')
 
-    # scorepad = scorepad_global
     web_turn_label = web_turn[scorepad_global.web_turn_tracking]
-    # dice_hold_web_form = DiceHoldWeb()  # Not in use, but keep for now
     png_list = dice_png_list(scorepad_global.web_dice_list)
 
     print(f'png_list: {png_list}')
@@ -167,7 +164,6 @@ def web_start_game():
     return render_template('webgame/roll_one.html',
                            scorepad=scorepad_global,
                            png_list=png_list,
-                           # dice_hold_web_form=dice_hold_web_form,
                            web_turn_label=web_turn_label,
                            )
 
@@ -218,16 +214,17 @@ def score_display_and_select():
 
 @webgame_bp.route('/update_scorepad/<selection>')
 def update_scorepad(selection):
-    print(f'***** update_scorepad route 03 *****')
+    print(f'***** update_scorepad route 01 *****')
     print(f'Selection key:  {selection}')
 
     final_dice = scorepad_global.web_dice_list
     png_list = dice_png_list(final_dice)
 
-    scorepad = process_category_selection(final_dice,
-                                          selection,
-                                          scorepad_global,
-                                          )
+    process_category_selection(final_dice,
+                               selection,
+                               scorepad_global,
+                               )
+
     display_flag = 'UPDATED'
 
     # Check if category selection is the last one. If true, go directly to
@@ -284,29 +281,9 @@ def exit_game():
 @webgame_bp.route('/', methods=['GET', 'POST'])
 @webgame_bp.route('/start_new_game')
 def start_new_game():
-    """reset scorepad"""
+    """Reset scorepad"""
 
     initialize_scorepad()
 
     print(f'*** start_new_game function end ***')
     return redirect(url_for('webgame_bp.web_start_game',))
-
-
-########################################################################
-    # *** Build template to replace CLI code below
-
-    # print('Final Score:')
-
-    # show_current_score(scorepad,
-    #                    scorepad.upper_section_total(),
-    #                    scorepad.upper_section_bonus_calc(),
-    #                    scorepad.upper_section_total_and_bonus(),
-    #                    scorepad.lower_section_total(),
-    #                    scorepad.grand_total(),
-    #                    )
-    # print()
-    # print(f'Thanks for playing! Your final score is {scorepad.grand_total()}')
-    # print()
-########################################################################
-
-
