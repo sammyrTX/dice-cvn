@@ -30,6 +30,7 @@ sample_dice = {'pass': {'ones': [[1, 1, 3, 5, 1], 3, 1, 'upper_ones', 'track_one
                         'any_dice': [[3, 3, 1, 2, 5], 14, 1, 'lower_all_dice', 'track_all_dice', 'g'],
                         # See separate test for bonus
                         # 'bonus': [[3, 3, 3, 3, 3], 100, 1, 'lower_bonus', 'bonus_counter', 'h']
+
                         },
                'fail': {'ones': [[3, 2, 2, 5, 6], 0, 1, 'upper_ones', 'track_ones', '1'],
                         'twos': [[1, 6, 1, 5, 1], 0, 1, 'upper_twos', 'track_twos', '2'],
@@ -79,6 +80,16 @@ sample_dice = {'pass': {'ones': [[1, 1, 3, 5, 1], 3, 1, 'upper_ones', 'track_one
                         'large_straight': [[1, 2, 3, 4, 5], 40, ' ', 'lower_straight_large', 'zeroed_straight_large', 'e'],
                         'five_of_a_kind': [[3, 3, 3, 3, 3], 50, ' ', 'lower_kind_five_of', 'zeroed_kind_five_of', 'f'],
                         'any_dice': [[3, 3, 1, 2, 5], 14, ' ', 'lower_all_dice', 'zeroed_all_dice', 'g'],
+                        },
+               }
+
+# Check fix for using five of a kind dice for a three of a kind score
+sample_dice2 = {'pass': {'three_of_a_kind_with_five_of_a_kind_dice': [[4, 4, 4, 4, 4], 20, 1, 'lower_kind_three_of', 'track_kind_three_of', 'a'],
+
+                        'four_of_a_kind_with_five_of_a_kind_dice': [[2, 2, 2, 2, 2], 10, 1, 'lower_kind_four_of', 'track_kind_four_of', 'b'],
+                        },
+               'fail': {'three_of_a_kind_with_five_of_a_kind_dice': [[4, 1, 2, 3, 4], 0, 1, 'lower_kind_three_of', 'track_kind_three_of', 'a'],
+               'four_of_a_kind_with_five_of_a_kind_dice': [[2, 6, 5, 5, 1], 0, 1, 'lower_kind_four_of', 'track_kind_four_of', 'b'],
                         },
                }
 
@@ -139,11 +150,35 @@ def test_all_pass01():
         assert getattr(score_test, _[3]) == _[1] and getattr(score_test, _[4]) == _[2]
 
 
-for _ in sample_dice['pass'].values():
+for __ in sample_dice['pass'].values():
 
     def test_all_pass02():
 
+        # _ = 'sixes'
+        print(f'{__}')
+        print(f'_[3]: {__[3]}')
+        print(f'_[1]: {__[1]}')
+        print(f'_[4]: {__[4]}')
+        print(f'_[2]: {__[2]}')
         score_test = Scorepad_('Tester-Pass')
+        print(f'score_test.name: {score_test.name}')
+        score_test.track_kind_five_of = 1  # It is zero since test always
+                                           # starts with an empty scorepad
+                                           # object
+        score_test = process_category_selection(__[0],
+                                                __[5].upper(),
+                                                score_test,
+                                                )
+
+        assert getattr(score_test, __[3]) == __[1] and getattr(score_test, __[4]) == __[2]
+
+# Test for case where five of a kind score is zeroed and player wants to use
+# five of a kind dice for a three or four of a kind score
+for _ in sample_dice2['pass'].values():
+
+    def test_all_pass03():
+
+        score_test = Scorepad_('Tester-Pass2')
         score_test.track_kind_five_of = 1  # It is zero since test always
                                            # starts with an empty scorepad
                                            # object

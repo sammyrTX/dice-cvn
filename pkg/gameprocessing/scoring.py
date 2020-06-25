@@ -45,9 +45,9 @@ def score_number_of_a_kind(final_dice,
     for _ in check_counts:
         value_counts.append(_[1])
 
-    if kind_type == 3 and (kind_type in value_counts or kind_type + 1 in value_counts):
+    if kind_type == 3 and (kind_type in value_counts or (kind_type + 1 or kind_type + 2) in value_counts):
         return sum(final_dice)
-    elif kind_type == 4 and kind_type in value_counts:
+    elif kind_type == 4 and (kind_type in value_counts or kind_type + 1 in value_counts):
         return sum(final_dice)
     elif kind_type == 5 and kind_type in value_counts:
         return fixed_scores['score_kind_five_of']
